@@ -1,0 +1,35 @@
+{
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
+  "type": "module",
+  "name": "frontend-project-lvl2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saga6569/frontend-project-lvl2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Saga6569/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/Saga6569/frontend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^6.1.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^26.4.2",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "jest": "^26.4.2",
+    "jest-cli": "^26.4.2"
+  }
+}
