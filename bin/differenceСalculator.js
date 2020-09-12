@@ -1,15 +1,10 @@
 #!/usr/bin/env node
 
 const data1 = {
-    "host": "hexlet.io",
-    "timeout": 50,
-    "proxy": "123.234.53.22",
-    "follow": false
+    "timeout": 50
 };
 const data2 = {
-    "timeout": 20,
-    "verbose": true,
-    "host": "hexlet.io"
+    "timeout": 20
 }
 
 export const keyBattery = (jsFail1, jsFail2) => {
@@ -25,7 +20,7 @@ export const keyBattery = (jsFail1, jsFail2) => {
     return allKey;
 };
 
-export const differenceCalculator = (jsFail1, jsFail2) => {
+const differenceCalculator = (jsFail1, jsFail2) => {
     const result = {};
     const allKey = keyBattery(jsFail1, jsFail2);
     for (const key of allKey) {
@@ -43,4 +38,4 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
     return result;
 };
 
-console.log(differenceCalculator(data1, data2))
+export default differenceCalculator;
