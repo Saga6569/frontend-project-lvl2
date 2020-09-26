@@ -18,9 +18,11 @@ export const keyBattery = (jsFail1, jsFail2) => {
   return allKey;
 };
 
+const allKeys = keyBattery(jsFail1, jsFail1);
+
 export const differenceCalculator = (jsFail1, jsFail2) => {
   const result = {};
-  const allKey = keyBattery(jsFail1, jsFail2);
+  const allKey = allKeys
   for (const key of allKey) {
       if (jsFail1[key] === jsFail2[key]) {
           result[`  ${key}`] = jsFail1[key];
@@ -36,7 +38,7 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
   return result;
 };
 
-export const parserYml = (fail) => {
+export const ymlInJeson = (fail) => {
   const doc = safeLoad(readFileSync(fail, 'utf8'));
   return doc;
 };
