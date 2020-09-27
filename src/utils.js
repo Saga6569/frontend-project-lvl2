@@ -18,11 +18,9 @@ export const keyBattery = (jsFail1, jsFail2) => {
   return allKey;
 };
 
-const allKeys = keyBattery(jsFail1, jsFail1);
-
 export const differenceCalculator = (jsFail1, jsFail2) => {
   const result = {};
-  const allKey = allKeys
+  const allKey = keyBattery(jsFail1, jsFail2);
   for (const key of allKey) {
       if (jsFail1[key] === jsFail2[key]) {
           result[`  ${key}`] = jsFail1[key];
