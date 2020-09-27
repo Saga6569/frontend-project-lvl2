@@ -36,7 +36,7 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
   return result;
 };
 
-export const ymlInJeson = (fail) => {
+export const ymlInJson = (fail) => {
   const doc = safeLoad(readFileSync(fail, 'utf8'));
   return doc;
 };
