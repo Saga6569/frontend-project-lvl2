@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { keyBattery, differenceCalculator, ymlInJson } from '../src/utils.js'; 
-
+import { differenceCalculator } from '../src/utils.js'; 
+import commander from 'commander';
+//_.isObject(value)
 
 const perserJs = (failJs) => {
     const result = JSON.stringify(failJs)

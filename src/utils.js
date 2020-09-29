@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync } from 'fs';
 import pkg from 'js-yaml';
-
+import  perserJs from '../parsers/parser.js'; 
 const { safeLoad } = pkg;
 
 export const keyBattery = (jsFail1, jsFail2) => {
@@ -18,11 +18,12 @@ export const keyBattery = (jsFail1, jsFail2) => {
 };
 
 export const differenceCalculator = (jsFail1, jsFail2) => {
-  const fail1  = (readFileSync(jsFail1, 'utf8'));
-  const fail2 = (readFileSync(jsFail2, 'utf8'));
+  const fail1 = safeLoad(readFileSync(jsFail1, 'utf8'));
+  const fail2 = safeLoad(readFileSync(jsFail2, 'utf8'));
   const result = {};
   const allKey = keyBattery(fail1, fail2);
   for (const key of allKey) {
+    console.log()
       if (fail1[key] === fail2[key]) {
           result[`  ${key}`] = fail1[key];
       } else if (fail1.hasOwnProperty(key) && fail2.hasOwnProperty(key)) {
@@ -35,7 +36,7 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
       }
   }
   console.log(result)
-  return result;
+  return perserJs(result);
 };
 
 export const ymlInJson = (fail) => {

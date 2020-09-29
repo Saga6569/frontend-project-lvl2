@@ -5,7 +5,7 @@ import { resolve } from 'path';
 import  perserJs from '../parsers/parser.js'; 
 import { readFileSync } from 'fs';
 import pkg from 'js-yaml';
-import { differenceCalculator, keyBattery } from '../src/utils.js';
+import { differenceCalculator } from '../src/utils.js';
 
 const program = new commander.Command();
 
