@@ -5,6 +5,7 @@ import { resolve } from 'path';
 import  perserJs from '../parsers/parser.js'; 
 import { readFileSync } from 'fs';
 import pkg from 'js-yaml';
+import { differenceCalculator, keyBattery } from '../src/utils.js';
 
 const program = new commander.Command();
 
@@ -16,6 +17,8 @@ program
     .description('Compares two configuration files and shows a difference.')
     .option('-f, --format [type]', 'output format')
     .arguments(`<filepath1> <filepath2>`)
-   
+    .action(differenceCalculator)
+
+    
 program.parse(process.argv);
-if (program.arguments(filepath1Value, filepath2Value)) console.log(perserJs(differenceCalculator(filepath1Value, filepath2Value)));
+

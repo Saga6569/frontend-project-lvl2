@@ -11,13 +11,3 @@ const perserJs = (failJs) => {
 };
 
 export default perserJs;
-
-//const data1 = {
- //   "timeout": 50,
-//    'lalal': 5
-//};
-//const data2 = {
-//    "timeout": 20
-//};
-
-//console.log(perserJs(differenceCalculator(data1, data2)));
