@@ -1,8 +1,11 @@
 #!/usr/bin/env node
+
 import { readFileSync } from 'fs';
 import pkg from 'js-yaml';
+import pkg1 from 'ini'
 import  perserJs from '../parsers/parser.js'; 
 const { safeLoad } = pkg;
+const { parse } = pkg1;
 
 export const keyBattery = (jsFail1, jsFail2) => {
   const allKey = [];
@@ -18,8 +21,8 @@ export const keyBattery = (jsFail1, jsFail2) => {
 };
 
 export const differenceCalculator = (jsFail1, jsFail2) => {
-  const fail1 = safeLoad(readFileSync(jsFail1, 'utf8'));
-  const fail2 = safeLoad(readFileSync(jsFail2, 'utf8'));
+  const fail1 = fileFormat(jsFail1);
+  const fail2 = fileFormat(jsFail2);
   const result = {};
   const allKey = keyBattery(fail1, fail2);
   for (const key of allKey) {
@@ -42,5 +45,15 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
 export const ymlInJson = (fail) => {
   const doc = safeLoad(readFileSync(fail, 'utf8'));
   return doc;
+};
+
+const fileFormat = (fail) => {
+  if (fail.includes('yml')) {
+    return (readFileSync(fail, 'utf8'))
+  } else if (fail.includes('json')) {
+    return safeLoad(readFileSync(fail, 'utf8')) 
+  } else if (fail.includes('ini')) {
+    return parse(readFileSync(fail, 'utf-8'))
+  }
 };
 
