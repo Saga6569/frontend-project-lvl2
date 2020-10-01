@@ -7,6 +7,9 @@ import  perserJs from '../parsers/parser.js';
 const { safeLoad } = pkg;
 const { parse } = pkg1;
 
+import pkg2 from 'lodash';
+const { isObject } = pkg2;
+
 export const keyBattery = (jsFail1, jsFail2) => {
   const allKey = [];
   const arrKeyJsf1 = Object.keys(jsFail1).sort();
@@ -26,30 +29,28 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
   const result = {};
   const allKey = keyBattery(fail1, fail2);
   for (const key of allKey) {
-    console.log()
-      if (fail1[key] === fail2[key]) {
-          result[`  ${key}`] = fail1[key];
-      } else if (fail1.hasOwnProperty(key) && fail2.hasOwnProperty(key)) {
-          result[`+ ${key}`] = fail1[key];
-          result[`- ${key}`] = fail2[key];
-      } else if (fail1.hasOwnProperty(key) && !fail2.hasOwnProperty(key)) {
-          result[`- ${key}`] = fail1[key];
-      } else if (!fail1.hasOwnProperty(key) && fail2.hasOwnProperty(key)) {
-          result[`+ ${key}`] = fail2[key];
-      }
+    if (isObject(fail1[key]) === true && isObject(fail2[key])) {
+      result[key] = differenceCalculator(fail1[key], fail2[key])
+    } else if (fail1.hasOwnProperty(key) && fail2.hasOwnProperty(key) && fail1[key] !== fail2[key]) {
+      result[`- ${key}`] = fail1[key];
+      result[`+ ${key}`] = fail2[key];
+    } else if (!fail1.hasOwnProperty(key) && fail2.hasOwnProperty(key)) {
+      result[`+ ${key}`] = fail2[key];
+    } else if (fail1.hasOwnProperty(key) && !fail2.hasOwnProperty(key)) {
+      result[`- ${key}`] = fail1[key];
+    } else if (fail1.hasOwnProperty(key) && fail2.hasOwnProperty(key) && fail1[key] === fail2[key]) {
+      result[`  ${key}`] = fail1[key];
+    }
   }
-  console.log(result)
+  //console.log(result)
   return perserJs(result);
 };
 
-export const ymlInJson = (fail) => {
-  const doc = safeLoad(readFileSync(fail, 'utf8'));
-  return doc;
-};
-
 const fileFormat = (fail) => {
-  if (fail.includes('yml')) {
-    return (readFileSync(fail, 'utf8'))
+  if (isObject(fail)) {
+    return fail;
+  } else if (fail.includes('yml')) {
+    return safeLoad(readFileSync(fail, 'utf8'))
   } else if (fail.includes('json')) {
     return safeLoad(readFileSync(fail, 'utf8')) 
   } else if (fail.includes('ini')) {
