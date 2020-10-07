@@ -6,14 +6,13 @@ import pkg1 from 'ini'
 import  perserJs from '../parsers/parser.js'; 
 const { safeLoad } = pkg;
 const { parse } = pkg1;
-
 import pkg2 from 'lodash';
-const { isObject } = pkg2;
+const { isObject, mapKeys } = pkg2;
 
 export const keyBattery = (jsFail1, jsFail2) => {
   const allKey = [];
-  const arrKeyJsf1 = Object.keys(jsFail1).sort();
-  const arrKeyJsf2 = Object.keys(jsFail2).sort();
+  const arrKeyJsf1 = Object.keys(jsFail1)
+  const arrKeyJsf2 = Object.keys(jsFail2)
   const arrKey = [...arrKeyJsf1, ...arrKeyJsf2];
   for (const key of arrKey) {
     if (!allKey.includes(key)) {
@@ -27,10 +26,10 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
   const fail1 = fileFormat(jsFail1);
   const fail2 = fileFormat(jsFail2);
   const result = {};
-  const allKey = keyBattery(fail1, fail2);
+  const allKey = keyBattery(fail1, fail2).sort();
   for (const key of allKey) {
-    if (isObject(fail1[key]) === true && isObject(fail2[key])) {
-      result[key] = differenceCalculator(fail1[key], fail2[key])
+    if (isObject(fail1[key]) && isObject(fail2[key])) {
+      result[`  ${key}`] = {...differenceCalculator(fail1[key], fail2[key])}
     } else if (fail1.hasOwnProperty(key) && fail2.hasOwnProperty(key) && fail1[key] !== fail2[key]) {
       result[`- ${key}`] = fail1[key];
       result[`+ ${key}`] = fail2[key];
@@ -42,11 +41,10 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
       result[`  ${key}`] = fail1[key];
     }
   }
-  //console.log(result)
-  return perserJs(result);
-};
+  return result;
+}
 
-const fileFormat = (fail) => {
+export const fileFormat = (fail) => {
   if (isObject(fail)) {
     return fail;
   } else if (fail.includes('yml')) {
