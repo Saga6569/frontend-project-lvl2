@@ -17,7 +17,7 @@ program
     .description('Compares two configuration files and shows a difference.')
     .option('-f, --format [type]', 'output format')
     .arguments(`<filepath1> <filepath2>`)
-    .action(perserJs(differenceCalculator))
+    .action(differenceCalculator)
 
     
 program.parse(process.argv);

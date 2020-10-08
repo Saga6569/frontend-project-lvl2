@@ -47,11 +47,11 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
 export const fileFormat = (fail) => {
   if (isObject(fail)) {
     return fail;
-  } else if (fail.includes('yml')) {
+  } else if (fail.includes('.yml')) {
     return safeLoad(readFileSync(fail, 'utf8'))
-  } else if (fail.includes('json')) {
+  } else if (fail.includes('.json')) {
     return safeLoad(readFileSync(fail, 'utf8')) 
-  } else if (fail.includes('ini')) {
+  } else if (fail.includes('.ini')) {
     return parse(readFileSync(fail, 'utf-8'))
   }
 };
