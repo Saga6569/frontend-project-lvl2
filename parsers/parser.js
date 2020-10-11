@@ -6,10 +6,8 @@ const { isObject, mapKeys } = pkg2;
 
 const perserJs = (failJs) => {
     const result = JSON.stringify(failJs);
-    JSON.parse(result, (k, v) => {
-    console.log(`${k}: ${v}`);
-    return k + v
-    });
+    console.log(result)
 };
+
 
 export default perserJs;

@@ -7,7 +7,7 @@ import  perserJs from '../parsers/parser.js';
 const { safeLoad } = pkg;
 const { parse } = pkg1;
 import pkg2 from 'lodash';
-const { isObject, mapKeys } = pkg2;
+const { isObject } = pkg2;
 
 export const keyBattery = (jsFail1, jsFail2) => {
   const allKey = [];
