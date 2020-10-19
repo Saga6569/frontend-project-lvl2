@@ -1,13 +1,21 @@
 #!/usr/bin/env node
-import { differenceCalculator } from '../src/utils.js'; 
-import commander from 'commander';
-import pkg2 from 'lodash';
-const { isObject, mapKeys } = pkg2;
+import _ from 'lodash';
 
-const perserJs = (failJs) => {
-    const result = JSON.stringify(failJs);
-    console.log(result)
+export const perserJs = (objct) => { 
+    const parserSS = (objct, acc) => {
+        let str = '{ \n';
+        const keys = Object.keys(objct);
+        for (const key of keys) { 
+            if (_.isObject(objct[key])) {
+                str += `  ${key} :  ${parserSS(objct[key], acc)} \n `;
+            } else {
+                str += ` ${key} : ${objct[key]} \n`;
+            }
+        }
+        str += `}`;
+        return str;
+    }
+   return parserSS(objct, []);
 };
-
 
 export default perserJs;
