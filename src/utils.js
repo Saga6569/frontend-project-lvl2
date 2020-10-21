@@ -42,9 +42,9 @@ export const fileFormat = (fail) => {
   if (_.isObject(fail)) {
     return fail;
   } else if (fail.includes('.yml')) {
-    return jsyaml.safeLoad(readFileSync(fail, 'utf-8'));
+    return jsyaml.safeLoad(readFileSync(fail, 'utf8'));
   } else if (fail.includes('.json')) {
-    return jsyaml.safeLoad(readFileSync(fail, 'utf-8'));
+    return jsyaml.safeLoad(readFileSync(fail, 'utf8'));
   } else if (fail.includes('.ini')) {
     return ini.parse(readFileSync(fail, 'utf-8'));
   }
