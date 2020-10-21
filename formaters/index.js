@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
-import pkg2 from 'lodash';
-const { isObject } = pkg2;
+import _ from 'lodash';
 import { fileFormat, keyBattery } from '../src/utils.js'; 
 
 const planCalculator = (jsFail1, jsFail2) => {
@@ -13,9 +12,9 @@ const planCalculator = (jsFail1, jsFail2) => {
     for (const key of allKey) {
       const put = [...acc];
       put.push(key);
-      const valeu = isObject(fail1[key]) ? '[complex value]': fail1[key];
-      const newValue = isObject(fail2[key]) ? '[complex value]': fail2[key];
-      if (isObject(fail1[key]) && isObject(fail2[key]) ) {
+      const valeu = _.isObject(fail1[key]) ? '[complex value]': fail1[key];
+      const newValue = _.isObject(fail2[key]) ? '[complex value]': fail2[key];
+      if (_.isObject(fail1[key]) && _.isObject(fail2[key]) ) {
         acc.push(key);
         result.push(iter(fail1[key], fail2[key], acc));
         acc.pop();

@@ -19,3 +19,4 @@ export const perserJs = (objct) => {
 };
 
 export default perserJs;
+

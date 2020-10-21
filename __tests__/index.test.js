@@ -17,9 +17,9 @@ const getFixturePath = (filename) => join(__dirname, '..', '__tests__', '__fixtu
 const data1 = getFixturePath('fail1.json')
 const data2 = getFixturePath('fail2.json')
 const resultTex = perserJs(differenceCalculator(data1, data2));
-const resultJson = differenceCalculator(data1, data2)
-const resultPlain = planCalculator(data1, data2)
-const resultJsonIni = jsyaml.safeLoad(readFileSync(getFixturePath('fail12Result.ini'), 'utf8'))
+const resultJson = differenceCalculator(data1, data2);
+const resultPlain = planCalculator(data1, data2);
+const resultJsonIni = jsyaml.safeLoad(readFileSync(getFixturePath('fail12Result.ini'), 'utf8'));
 
 test('test json', () => {
   const data1 = getFixturePath('fail1.json');

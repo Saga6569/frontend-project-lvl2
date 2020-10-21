@@ -6,16 +6,14 @@ import ini from 'ini';
 import _ from 'lodash';
 
 export const keyBattery = (jsFail1, jsFail2) => {
-  const allKey = [];
   const arrKeyJsf1 = Object.keys(jsFail1);
   const arrKeyJsf2 = Object.keys(jsFail2);
   const arrKey = [...arrKeyJsf1, ...arrKeyJsf2];
-  for (const key of arrKey) {
-    if (!allKey.includes(key)) {
-      allKey.push(key);
-    }
-  }
-  return allKey;
+  const keyBatterys = arrKey.reduce((acc, key) => {
+    acc.includes(key) ? acc : acc.push(key);
+    return acc;
+  }, []);
+  return keyBatterys;
 };
 
 export const differenceCalculator = (jsFail1, jsFail2) => {
@@ -38,17 +36,18 @@ export const differenceCalculator = (jsFail1, jsFail2) => {
     }
   }
   return result;
-}
+};
 
 export const fileFormat = (fail) => {
   if (_.isObject(fail)) {
     return fail;
   } else if (fail.includes('.yml')) {
-    return jsyaml.safeLoad(readFileSync(fail, 'utf8'));
+    return jsyaml.safeLoad(readFileSync(fail, 'utf-8'));
   } else if (fail.includes('.json')) {
-    return jsyaml.safeLoad(readFileSync(fail, 'utf8'));
+    return jsyaml.safeLoad(readFileSync(fail, 'utf-8'));
   } else if (fail.includes('.ini')) {
     return ini.parse(readFileSync(fail, 'utf-8'));
   }
 };
+
 
