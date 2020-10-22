@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
-import gendiff from './gendiff.js';
+import gendiff from './bin/gendiff.js';
 
 export default gendiff;

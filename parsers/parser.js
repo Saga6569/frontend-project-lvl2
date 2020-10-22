@@ -1,22 +1,17 @@
-#!/usr/bin/env node
 import _ from 'lodash';
 
-export const perserJs = (objct) => { 
-    const parserSS = (objct, acc) => {
-        let str = '{ \n';
-        const keys = Object.keys(objct);
-        for (const key of keys) { 
-            if (_.isObject(objct[key])) {
-                str += `  ${key} :  ${parserSS(objct[key], acc)} \n `;
-            } else {
-                str += ` ${key} : ${objct[key]} \n`;
-            }
-        }
-        str += `}`;
-        return str;
+const perserJs = (objct) => {
+  const keys = Object.keys(objct);
+  return keys.reduce((acc, key) => {
+    if (_.isObject(objct[key])) {
+      // eslint-disable-next-line no-param-reassign
+      acc += ` ${key} :  ${perserJs(objct[key])} \n `;
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      acc += ` ${key} : ${objct[key]} \n`;
     }
-   return parserSS(objct, []);
+    return acc;
+  }, '');
 };
 
 export default perserJs;
-

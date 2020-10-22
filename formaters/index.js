@@ -1,32 +1,29 @@
-#!/usr/bin/env node
-
 import _ from 'lodash';
-import { fileFormat, keyBattery } from '../src/utils.js'; 
+import { fileFormat, keyBattery } from '../src/utils.js';
 
 const planCalculator = (jsFail1, jsFail2) => {
-    const iter = (jsFail1, jsFail2, acc) => {
-    const fail1 = fileFormat(jsFail1);
-    const fail2 = fileFormat(jsFail2);
-    const result = [];
+  const iter = (one, tye, acc) => {
+    const fail1 = fileFormat(one);
+    const fail2 = fileFormat(tye);
     const allKey = keyBattery(fail1, fail2).sort();
-    for (const key of allKey) {
+    return allKey.reduce((result, key) => {
       const put = [...acc];
       put.push(key);
-      const valeu = _.isObject(fail1[key]) ? '[complex value]': fail1[key];
-      const newValue = _.isObject(fail2[key]) ? '[complex value]': fail2[key];
-      if (_.isObject(fail1[key]) && _.isObject(fail2[key]) ) {
+      const valeu = _.isObject(fail1[key]) ? '[complex value]' : fail1[key];
+      const newValue = _.isObject(fail2[key]) ? '[complex value]' : fail2[key];
+      if (_.isObject(fail1[key]) && _.isObject(fail2[key])) {
         acc.push(key);
         result.push(iter(fail1[key], fail2[key], acc));
         acc.pop();
-      } else if (fail1.hasOwnProperty(key) && fail2.hasOwnProperty(key) && fail1[key] !== fail2[key]) {
+      } else if (_.has(fail1, key) && _.has(fail2, key) && fail1[key] !== fail2[key]) {
         result.push(`Property ${put.join('.')} was updated. From ${valeu} to ${newValue}`);
-      } else if (!fail1.hasOwnProperty(key) && fail2.hasOwnProperty(key)) {
+      } else if (!_.has(fail1, key) && _.has(fail2, key)) {
         result.push(`Property ${put.join('.')} was added with value: ${newValue}`);
-      } else if (fail1.hasOwnProperty(key) && !fail2.hasOwnProperty(key)) {
+      } else if (_.has(fail1, key) && !_.has(fail2, key)) {
         result.push(`Property ${put.join('.')} was removed`);
-      } 
-    }
-    return result.flat();
+      }
+      return result.flat();
+    }, []);
   };
   return iter(jsFail1, jsFail2, []).flat();
 };
