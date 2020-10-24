@@ -23,6 +23,9 @@ const format = {
 };
 
 export const fileFormat = (fail) => {
+  if (_.isObject(fail)) {
+    return fail;
+  }
   const formaters = format;
   const index = fail.lastIndexOf('.');
   const str = fail.slice(index + 1);

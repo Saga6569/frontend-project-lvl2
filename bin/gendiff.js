@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import commander from 'commander';
 import perserJs from '../parsers/parser.js';
 import { differenceCalculator } from '../src/utils.js';
