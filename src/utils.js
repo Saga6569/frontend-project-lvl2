@@ -3,9 +3,9 @@ import jsyaml from 'js-yaml';
 import ini from 'ini';
 import _ from 'lodash';
 
-export const keyBattery = (jsFail1, jsFail2) => {
+export const keyBattery = (jsFail1, jsjsFail2) => {
   const arrKeyJsf1 = Object.keys(jsFail1);
-  const arrKeyJsf2 = Object.keys(jsFail2);
+  const arrKeyJsf2 = Object.keys(jsjsFail2);
   const arrKey = [...arrKeyJsf1, ...arrKeyJsf2];
   const keyBatterys = arrKey.reduce((acc, key) => {
     if (!acc.includes(key)) {
@@ -37,21 +37,19 @@ export const fileFormat = (fail) => {
 };
 
 export const differenceCalculator = (jsFail1, jsFail2) => {
-  const fail1 = fileFormat(jsFail1);
-  const fail2 = fileFormat(jsFail2);
-  const allKey = keyBattery(fail1, fail2).sort();
+  const allKey = keyBattery(jsFail1, jsFail2).sort();
   return allKey.reduce((acc, key) => {
-    if (_.isObject(fail1[key]) && _.isObject(fail2[key])) {
-      acc[`  ${key}`] = { ...differenceCalculator(fail1[key], fail2[key]) };
-    } else if (_.has(fail1, key) && _.has(fail2, key) && fail1[key] !== fail2[key]) {
-      acc[`- ${key}`] = fail1[key];
-      acc[`+ ${key}`] = fail2[key];
-    } else if (!_.has(fail1, key) && _.has(fail2, key)) {
-      acc[`+ ${key}`] = fail2[key];
-    } else if (_.has(fail1, key) && !_.has(fail2, key)) {
-      acc[`- ${key}`] = fail1[key];
-    } else if (_.has(fail1, key) && _.has(fail2, key) && fail1[key] === fail2[key]) {
-      acc[`  ${key}`] = fail1[key];
+    if (_.isObject(jsFail1[key]) && _.isObject(jsFail2[key])) {
+      acc[`  ${key}`] = { ...differenceCalculator(jsFail1[key], jsFail2[key]) };
+    } else if (_.has(jsFail1, key) && _.has(jsFail2, key) && jsFail1[key] !== jsFail2[key]) {
+      acc[`- ${key}`] = jsFail1[key];
+      acc[`+ ${key}`] = jsFail2[key];
+    } else if (!_.has(jsFail1, key) && _.has(jsFail2, key)) {
+      acc[`+ ${key}`] = jsFail2[key];
+    } else if (_.has(jsFail1, key) && !_.has(jsFail2, key)) {
+      acc[`- ${key}`] = jsFail1[key];
+    } else if (_.has(jsFail1, key) && _.has(jsFail2, key) && jsFail1[key] === jsFail2[key]) {
+      acc[`  ${key}`] = jsFail1[key];
     }
     return acc;
   }, {});

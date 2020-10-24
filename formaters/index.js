@@ -1,10 +1,8 @@
 import _ from 'lodash';
-import { fileFormat, keyBattery } from '../src/utils.js';
+import { keyBattery } from '../src/utils.js';
 
 const planCalculator = (jsFail1, jsFail2) => {
-  const iter = (one, tye, acc) => {
-    const fail1 = fileFormat(one);
-    const fail2 = fileFormat(tye);
+  const iter = (fail1, fail2, acc) => {
     const allKey = keyBattery(fail1, fail2).sort();
     return allKey.reduce((result, key) => {
       const put = [...acc];
