@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import commander from 'commander';
 import perserJs from '../parsers/parser.js';
-import { differenceCalculator, fileFormat } from '../src/utils.js';
-import planCalculator from '../formaters/index.js';
+import { fileFormat } from '../src/utils.js';
+// eslint-disable-next-line no-unused-vars
+import { diffCalculator, getDiffCalculator } from '../formaters/index.js';
 
 const program = new commander.Command();
 
@@ -15,15 +16,15 @@ program
     const fail1 = fileFormat(filepath1Value);
     const fail2 = fileFormat(filepath2Value);
     if (program.format === 'plain') {
-      const result = planCalculator(fail1, fail2);
+      const result = getDiffCalculator(fail1, fail2, 'plain');
       console.log(result);
       return result;
     } if (program.format === 'json') {
-      const result = differenceCalculator(fail1, fail2);
+      const result = getDiffCalculator(fail1, fail2, 'json');
       console.log(result);
       return result;
     }
-    const result = perserJs(differenceCalculator(fail1, fail2));
+    const result = perserJs(getDiffCalculator(fail1, fail2));
     console.log(result);
     return result;
   });

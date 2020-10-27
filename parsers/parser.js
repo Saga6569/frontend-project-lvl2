@@ -6,11 +6,8 @@ const perserJs = (objct) => {
     const speas = (count = 1) => '    '.repeat(count);
     const keys = Object.keys(objctt);
     const result = keys.reduce((acc, key) => {
-      if (_.isObject(objctt[key])) {
-        acc += `${speas(dep)} ${key}: ${iter(objctt[key], dep + 1)} \n`;
-      } else {
-        acc += `${speas(dep)} ${key}: ${objctt[key]} \n`;
-      }
+      const value = _.isObject(objctt[key]) ? iter(objctt[key], dep + 1) : objctt[key];
+      acc += `${speas(dep)} ${key}: ${value} \n`;
       return acc;
     }, '{ \n');
     return `${result} ${speas(dep)} }`;
