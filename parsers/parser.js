@@ -10,7 +10,7 @@ const perserJs = (objct) => {
       acc += `${speas(dep)} ${key}: ${value} \n`;
       return acc;
     }, '{ \n');
-    return `${result} ${speas(dep)} }`;
+    return `${result} ${speas(dep)}}`;
   };
   return iter(objct, 0);
 };
