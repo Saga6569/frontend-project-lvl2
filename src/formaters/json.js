@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { keyBattery } from '../src/utils.js';
+import { keyBattery } from '../utils.js';
 
 const differenceCalculator = (jsFail1, jsFail2) => {
   const arrKeyfile = keyBattery(jsFail1, jsFail2).sort();

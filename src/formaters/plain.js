@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { keyBattery } from '../src/utils.js';
+import { keyBattery } from '../utils.js';
 
 const planCalculator = (jsFail1, jsFail2) => {
   const iter = (fail1, fail2, acc) => {

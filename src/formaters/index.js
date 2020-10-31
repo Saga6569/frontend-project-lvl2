@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { formater } from '../src/utils.js';
+import { formater } from '../utils.js';
 import planCalculator from './plain.js';
 import differenceCalculator from './json.js';
 import perserJs from '../parsers/parser.js';

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import commander from 'commander';
-import getDiffCalculator from '../formaters/index.js';
+import getDiffCalculator from '../src/formaters/index.js';
 
 const program = new commander.Command();
 

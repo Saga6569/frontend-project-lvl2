@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { readFileSync } from 'fs';
 import jsyaml from 'js-yaml';
-import getDiffCalculator from '../formaters/index.js';
+import getDiffCalculator from '../src/formaters/index.js';
 // eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);
 // eslint-disable-next-line no-underscore-dangle
