@@ -1,19 +1,21 @@
-import _ from 'lodash';
 import { keyBattery } from '../utils.js';
+import {
+  isObjet, isСhanged, isAdd, isDeletion,
+} from '../parsers/parser.js';
 
 const differenceCalculator = (jsFail1, jsFail2) => {
   const arrKeyfile = keyBattery(jsFail1, jsFail2).sort();
   return arrKeyfile.reduce((acc, key) => {
-    if (_.isObject(jsFail1[key]) && _.isObject(jsFail2[key])) {
+    if (isObjet(jsFail1, jsFail2, key)) {
       acc[`  ${key}`] = { ...differenceCalculator(jsFail1[key], jsFail2[key]) };
-    } else if (_.has(jsFail1, key) && _.has(jsFail2, key) && jsFail1[key] !== jsFail2[key]) {
+    } else if (isСhanged(jsFail1, jsFail2, key)) {
       acc[`- ${key}`] = jsFail1[key];
       acc[`+ ${key}`] = jsFail2[key];
-    } else if (!_.has(jsFail1, key) && _.has(jsFail2, key)) {
+    } else if (isAdd(jsFail1, jsFail2, key)) {
       acc[`+ ${key}`] = jsFail2[key];
-    } else if (_.has(jsFail1, key) && !_.has(jsFail2, key)) {
+    } else if (isDeletion(jsFail1, jsFail2, key)) {
       acc[`- ${key}`] = jsFail1[key];
-    } else if (_.has(jsFail1, key) && _.has(jsFail2, key) && jsFail1[key] === jsFail2[key]) {
+    } else {
       acc[`  ${key}`] = jsFail1[key];
     }
     return acc;

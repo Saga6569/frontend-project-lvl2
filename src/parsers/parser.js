@@ -1,18 +1,29 @@
-/* eslint-disable no-param-reassign */
 import _ from 'lodash';
 
-const perserJs = (objct) => {
-  const iter = (objctt, dep) => {
-    const indent = (count = 1) => '    '.repeat(count);
-    const keys = Object.keys(objctt);
-    const result = keys.reduce((acc, key) => {
-      const value = _.isObject(objctt[key]) ? iter(objctt[key], dep + 1) : objctt[key];
-      acc += `${indent(dep)} ${key}: ${value} \n`;
-      return acc;
-    }, '{ \n');
-    return `${result} ${indent(dep)}}`;
-  };
-  return iter(objct, 0);
+export const isDeletion = (file1, file2, key) => {
+  if (_.has(file1, key) && !_.has(file2, key)) {
+    return true;
+  }
+  return false;
 };
 
-export default perserJs;
+export const isAdd = (file1, file2, key) => {
+  if (!_.has(file1, key) && _.has(file2, key)) {
+    return true;
+  }
+  return false;
+};
+
+export const isСhanged = (file1, file2, key) => {
+  if (_.has(file1, key) && _.has(file2, key) && file1[key] !== file2[key]) {
+    return true;
+  }
+  return false;
+};
+
+export const isObjet = (file1, file2, key) => {
+  if (_.isObject(file1[key]) && _.isObject(file2[key])) {
+    return true;
+  }
+  return false;
+};

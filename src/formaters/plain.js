@@ -1,5 +1,8 @@
 import _ from 'lodash';
 import { keyBattery } from '../utils.js';
+import {
+  isObjet, isСhanged, isAdd, isDeletion,
+} from '../parsers/parser.js';
 
 const planCalculator = (jsFail1, jsFail2) => {
   const iter = (fail1, fail2, acc) => {
@@ -8,13 +11,13 @@ const planCalculator = (jsFail1, jsFail2) => {
       acc.push(key);
       const valeu = _.isObject(fail1[key]) ? '[complex value]' : fail1[key];
       const newValue = _.isObject(fail2[key]) ? '[complex value]' : fail2[key];
-      if (_.isObject(fail1[key]) && _.isObject(fail2[key])) {
+      if (isObjet(fail1, fail2, key)) {
         result.push(iter(fail1[key], fail2[key], acc));
-      } else if (_.has(fail1, key) && _.has(fail2, key) && fail1[key] !== fail2[key]) {
+      } else if (isСhanged(fail1, fail2, key)) {
         result.push(`Property ${acc.join('.')} was updated. From ${valeu} to ${newValue}`);
-      } else if (!_.has(fail1, key) && _.has(fail2, key)) {
+      } else if (isAdd(fail1, fail2, key)) {
         result.push(`Property ${acc.join('.')} was added with value: ${newValue}`);
-      } else if (_.has(fail1, key) && !_.has(fail2, key)) {
+      } else if (isDeletion(fail1, fail2, key)) {
         result.push(`Property ${acc.join('.')} was removed`);
       }
       acc.pop();
