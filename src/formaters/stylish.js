@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import _ from 'lodash';
 
-const stylish = (data) => {
+const formatStylish = (data) => {
   const iter = (objct, dep) => {
     const indent = (count = 1) => '    '.repeat(count);
     const keys = Object.keys(objct);
@@ -15,4 +15,4 @@ const stylish = (data) => {
   return iter(data, 0);
 };
 
-export default stylish;
+export default formatStylish;

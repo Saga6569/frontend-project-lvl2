@@ -1,4 +1,5 @@
 import { keyBattery } from '../utils.js';
+
 import {
   isObjet, isСhanged, isAdd, isDeletion,
 } from '../parsers/parser.js';
