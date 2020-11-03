@@ -3,6 +3,7 @@ import planCalculator from './plain.js';
 import differenceCalculator from './json.js';
 import formatStylish from './stylish.js';
 
+// eslint-disable-next-line consistent-return
 const getDiffCalculator = (fail1, fail2, format) => {
   const failFormat1 = formater(fail1);
   const failFormat2 = formater(fail2);
