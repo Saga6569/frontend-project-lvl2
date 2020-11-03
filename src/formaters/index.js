@@ -3,16 +3,16 @@ import planCalculator from './plain.js';
 import differenceCalculator from './json.js';
 import formatStylish from './stylish.js';
 
-const diffCalculator = {
-  plain: planCalculator,
-  json: differenceCalculator,
-  stylish: formatStylish,
-};
-
-const getDiffCalculator = (fail1, fail2, from) => {
+const getDiffCalculator = (fail1, fail2, format) => {
   const failFormat1 = formater(fail1);
   const failFormat2 = formater(fail2);
-  return diffCalculator[from](failFormat1, failFormat2);
+  if (format === 'plain') {
+    return planCalculator(failFormat1, failFormat2);
+  } if (format === 'json') {
+    return differenceCalculator(failFormat1, failFormat2);
+  } if (format === 'stylish') {
+    return formatStylish(differenceCalculator(failFormat1, failFormat2));
+  }
 };
 
 export default getDiffCalculator;
