@@ -4,15 +4,18 @@ import differenceCalculator from './json.js';
 import formatStylish from './stylish.js';
 
 // eslint-disable-next-line consistent-return
-const getDiffCalculator = (fail1, fail2, format) => {
-  const failFormat1 = formater(fail1);
-  const failFormat2 = formater(fail2);
+const getDiffCalculator = (file1, file2, format) => {
+  const failFormat1 = formater(file1);
+  const failFormat2 = formater(file2);
   if (format === 'plain') {
-    return planCalculator(failFormat1, failFormat2);
+    const result = planCalculator(failFormat1, failFormat2);
+    return result;
   } if (format === 'json') {
-    return differenceCalculator(failFormat1, failFormat2);
+    const result = differenceCalculator(failFormat1, failFormat2);
+    return result;
   } if (format === 'stylish') {
-    return formatStylish(differenceCalculator(failFormat1, failFormat2));
+    const result = differenceCalculator(failFormat1, failFormat2);
+    return formatStylish(result);
   }
 };
 
