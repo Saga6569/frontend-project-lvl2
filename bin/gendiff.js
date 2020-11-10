@@ -10,7 +10,6 @@ program
   .option('-f, --format [type]', 'output format', 'stylish')
   .arguments('<filepath1> <filepath2> ')
   .action((filepath1Value, filepath2Value) => {
-    console.log(program.format);
     const result = getDiffCalculator(filepath1Value, filepath2Value, program.format);
     console.log(result);
   });

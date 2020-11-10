@@ -1,31 +1,34 @@
 import _ from 'lodash';
-import { keyBattery } from '../utils.js';
-
 import {
-  isObjet, isСhanged, isAdd, isDeletion,
-} from '../parsers/parser.js';
+  getChildren, getMeta, getName, isDirectory,
+} from '@hexlet/immutable-fs-trees';
 
-const planCalculator = (jsFail1, jsFail2) => {
-  const iter = (fail1, fail2, acc) => {
-    const allKey = keyBattery(fail1, fail2).sort();
-    return allKey.reduce((result, key) => {
-      acc.push(key);
-      const valeu = _.isObject(fail1[key]) ? '[complex value]' : fail1[key];
-      const newValue = _.isObject(fail2[key]) ? '[complex value]' : fail2[key];
-      if (isObjet(fail1, fail2, key)) {
-        result.push(iter(fail1[key], fail2[key], acc));
-      } else if (isСhanged(fail1, fail2, key)) {
-        result.push(`Property ${acc.join('.')} was updated. From ${valeu} to ${newValue}`);
-      } else if (isAdd(fail1, fail2, key)) {
-        result.push(`Property ${acc.join('.')} was added with value: ${newValue}`);
-      } else if (isDeletion(fail1, fail2, key)) {
-        result.push(`Property ${acc.join('.')} was removed`);
+const planCalculator = (tree) => {
+  const iter = (tree, put) => {
+    const children = getChildren(tree);
+    return children.reduce((result, child) => {
+      const meta = getMeta(child);
+      const arrKey = Object.keys(meta);
+      const valeu = _.isObject(meta[arrKey[0]]) ? '[complex value]' : meta[arrKey[0]];
+      const newValue = _.isObject(meta[arrKey[1]]) ? '[complex value]' : meta[arrKey[1]];
+      const key = getName(child);
+      put.push(key);
+      if (!isDirectory(child)) {
+        if (arrKey.length !== 1) {
+          result.push(`Property ${put.join('.')} was updated. From ${valeu} to ${newValue}`);
+        } else if (arrKey.length === 1 && arrKey.includes('+')) {
+          result.push(`Property ${put.join('.')} was added with value: ${valeu}`);
+        } else if (arrKey.length === 1 && arrKey.includes('-')) {
+          result.push(`Property ${put.join('.')} was removed`);
+        }
+      } else if (isDirectory(child)) {
+        result.push(iter(child, put));
       }
-      acc.pop();
+      put.pop();
       return result.flat();
     }, []);
   };
-  return iter(jsFail1, jsFail2, []).flat();
+  return iter(tree, []);
 };
 
 export default planCalculator;

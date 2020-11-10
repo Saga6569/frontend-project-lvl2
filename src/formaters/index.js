@@ -1,22 +1,25 @@
+import { mkdir } from '@hexlet/immutable-fs-trees';
 import { formater } from '../utils.js';
 import planCalculator from './plain.js';
 import differenceCalculator from './json.js';
 import formatStylish from './stylish.js';
+import parser from '../parsers/parser.js';
 
-// eslint-disable-next-line consistent-return
 const getDiffCalculator = (file1, file2, format) => {
   const failFormat1 = formater(file1);
   const failFormat2 = formater(file2);
+  const tree = mkdir('/', parser(failFormat1, failFormat2));
   if (format === 'plain') {
-    const result = planCalculator(failFormat1, failFormat2);
+    const result = planCalculator(tree);
     return result;
   } if (format === 'json') {
-    const result = differenceCalculator(failFormat1, failFormat2);
+    const result = differenceCalculator(tree);
     return result;
   } if (format === 'stylish') {
-    const result = differenceCalculator(failFormat1, failFormat2);
+    const result = differenceCalculator(tree);
     return formatStylish(result);
   }
+  return tree;
 };
 
 export default getDiffCalculator;
