@@ -4,8 +4,8 @@ import {
 } from '@hexlet/immutable-fs-trees';
 
 const planCalculator = (tree) => {
-  const iter = (tree, put) => {
-    const children = getChildren(tree);
+  const iter = (data, put) => {
+    const children = getChildren(data);
     return children.reduce((result, child) => {
       const meta = getMeta(child);
       const arrKey = Object.keys(meta);

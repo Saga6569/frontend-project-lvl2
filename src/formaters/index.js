@@ -1,7 +1,7 @@
 import { mkdir } from '@hexlet/immutable-fs-trees';
 import { formater } from '../utils.js';
 import planCalculator from './plain.js';
-import differenceCalculator from './json.js';
+import formatJson from './json.js';
 import formatStylish from './stylish.js';
 import parser from '../parsers/parser.js';
 
@@ -13,11 +13,11 @@ const getDiffCalculator = (file1, file2, format) => {
     const result = planCalculator(tree);
     return result;
   } if (format === 'json') {
-    const result = differenceCalculator(tree);
+    const result = JSON.stringify(tree);
     return result;
   } if (format === 'stylish') {
-    const result = differenceCalculator(tree);
-    return formatStylish(result);
+    const result = formatStylish(tree);
+    return result;
   }
   return tree;
 };
