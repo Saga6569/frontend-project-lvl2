@@ -30,3 +30,11 @@ export const formater = (file) => {
   }
   return console.log('no format');
 };
+
+export const finValue = (data) => {
+  const key = Object.keys(data);
+  if (key === null) {
+    return data[key];
+  }
+  return finValue(data[key]);
+};

@@ -1,32 +1,30 @@
 import _ from 'lodash';
-import {
-  getChildren, getMeta, getName, isDirectory,
-} from '@hexlet/immutable-fs-trees';
 
 const planCalculator = (tree) => {
   const iter = (data, put) => {
-    const children = getChildren(data);
-    return children.reduce((result, child) => {
-      const meta = getMeta(child);
-      const arrKey = Object.keys(meta);
-      const valeu = _.isObject(meta[arrKey[0]]) ? '[complex value]' : meta[arrKey[0]];
-      const newValue = _.isObject(meta[arrKey[1]]) ? '[complex value]' : meta[arrKey[1]];
-      const key = getName(child);
+    const arr = data.reduce((result, child) => {
+      const key = child.length === 2 ? child[0] : Object.keys(Object.values(child)[0]);
       put.push(key);
-      if (!isDirectory(child)) {
-        if (arrKey.length !== 1) {
-          result.push(`Property ${put.join('.')} was updated. From ${valeu} to ${newValue}`);
-        } else if (arrKey.length === 1 && arrKey.includes('+')) {
-          result.push(`Property ${put.join('.')} was added with value: ${valeu}`);
-        } else if (arrKey.length === 1 && arrKey.includes('-')) {
-          result.push(`Property ${put.join('.')} was removed`);
-        }
-      } else if (isDirectory(child)) {
-        result.push(iter(child, put));
+      if (child.length === 2) {
+        result.push(iter(child[1], put));
+      } else if (_.has(child, 'deletion')) {
+        result.push(`Property ${put.join('.')} was removed`);
+      } else if (_.has(child, 'add')) {
+        const { add } = child;
+        const data = Object.values(add)[0];
+        const value = _.isObject(data) ? '[complex value]' : Object.values(add).flat();
+        result.push(`Property ${put.join('.')} was added with value: ${value}`);
+      } else if (_.has(child, 'updated')) {
+        const { updated } = child;
+        const values = Object.values(updated).flat();
+        const value = _.isObject(values[0]) ? '[complex value]' : values[0];
+        const newValue = _.isObject(values[1]) ? '[complex value]' : values[1];
+        result.push(`Property ${put.join('.')} was updated. From ${value} to ${newValue}`);
       }
       put.pop();
       return result.flat();
     }, []);
+    return arr;
   };
   return iter(tree, []);
 };
