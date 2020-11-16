@@ -1,5 +1,16 @@
 import _ from 'lodash';
 
+const stylish = (data, dep) => {
+  const indent = (count = 1) => '    '.repeat(count);
+  const keys = Object.keys(data);
+  const result = keys.reduce((acc, key) => {
+    const value = _.isObject(data[key]) ? stylish(data[key], dep + 1) : data[key];
+    acc += `${indent(dep)} ${key}: ${value} \n`;
+    return acc;
+  }, '{ \n');
+  return `${result}${indent(dep)}}`;
+};
+
 const formatStylish = (tree) => {
   const iter = (tree, dep) => {
     const indent = (count = 1) => '    '.repeat(count);
@@ -9,7 +20,7 @@ const formatStylish = (tree) => {
         acc += `${indent(dep)} ${child[0]}: ${iter(child[1], dep + 1)} \n`;
       } else {
         const data = Object.values(Object.values(child)[0]).flat();
-        const value = _.isObject(data[0]) ? JSON.stringify(data[0], '', '\t') : data;
+        const value = _.isObject(data[0]) ? stylish(data[0], dep + 1) : data;
         if (_.has(child, 'deletion')) {
           acc += `${indent(dep)} - ${key}: ${value} \n`;
         } else if (_.has(child, 'add')) {

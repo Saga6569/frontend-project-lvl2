@@ -11,8 +11,8 @@ const planCalculator = (tree) => {
         result.push(`Property ${put.join('.')} was removed`);
       } else if (_.has(child, 'add')) {
         const { add } = child;
-        const data = Object.values(add)[0];
-        const value = _.isObject(data) ? '[complex value]' : Object.values(add).flat();
+        const data1 = Object.values(add)[0];
+        const value = _.isObject(data1) ? '[complex value]' : Object.values(add).flat();
         result.push(`Property ${put.join('.')} was added with value: ${value}`);
       } else if (_.has(child, 'updated')) {
         const { updated } = child;
