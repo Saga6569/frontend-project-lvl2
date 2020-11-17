@@ -36,16 +36,16 @@ const parser = (file1, file2) => {
       const file = [...[key], parser(file1[key], file2[key])];
       acc.push(file);
     } else if (isСhanged(file1, file2, key)) {
-      const file = { updated: { [key]: [file1[key], file2[key]] } };
+      const file = { updated: { [key]: [String(file1[key]), String(file2[key])] } };
       acc.push(file);
     } else if (isAdd(file1, file2, key)) {
       const file = { add: { [key]: file2[key] } };
       acc.push(file);
     } else if (isDeletion(file1, file2, key)) {
-      const file = { deletion: { [key]: file1[key] } };
+      const file = { deletion: { [key]: String(file1[key]) } };
       acc.push(file);
     } else {
-      const file = { equally: { [key]: file1[key] } };
+      const file = { equally: { [key]: String(file1[key]) } };
       acc.push(file);
     }
     return acc;

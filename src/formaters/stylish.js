@@ -1,6 +1,11 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-param-reassign */
 import _ from 'lodash';
 
 const stylish = (data, dep) => {
+  if (!_.isObject(data)) {
+    return data;
+  }
   const indent = (count = 1) => '    '.repeat(count);
   const keys = Object.keys(data);
   const result = keys.reduce((acc, key) => {
@@ -19,8 +24,8 @@ const formatStylish = (tree) => {
       if (Array.isArray(child)) {
         acc += `${indent(dep)} ${child[0]}: ${iter(child[1], dep + 1)} \n`;
       } else {
-        const data = Object.values(Object.values(child)[0]).flat();
-        const value = _.isObject(data[0]) ? stylish(data[0], dep + 1) : data;
+        const arrData = Object.values(Object.values(child)[0]).flat();
+        const value = arrData.flatMap((data) => stylish(data, dep + 1));
         if (_.has(child, 'deletion')) {
           acc += `${indent(dep)} - ${key}: ${value} \n`;
         } else if (_.has(child, 'add')) {

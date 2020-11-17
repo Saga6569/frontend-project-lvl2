@@ -2,6 +2,7 @@ import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import getDiffCalculator from '../src/formaters/index.js';
+
 // eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);
 // eslint-disable-next-line no-underscore-dangle
@@ -35,6 +36,6 @@ test('test ini ', () => {
   const dataIni1 = getFixturePath('fail1.ini');
   const dataIni2 = getFixturePath('fail2.ini');
   expect(getDiffCalculator(dataIni1, dataIni2)).toEqual(resultDefault);
-  expect(getDiffCalculator(dataIni1, dataIni2, 'plain')).toEqual(resultPlainJson);
   expect(getDiffCalculator(dataIni1, dataIni2, 'json')).toEqual(resultJson);
+  expect(getDiffCalculator(dataIni1, dataIni2, 'plain')).toEqual(resultPlainJson);
 });

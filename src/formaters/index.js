@@ -3,9 +3,9 @@ import planCalculator from './plain.js';
 import formatStylish from './stylish.js';
 import parser from '../parsers/parser.js';
 
-const getDiffCalculator = (file1, file2, format) => {
-  const failFormat1 = formater(file1);
-  const failFormat2 = formater(file2);
+const getDiffCalculator = (value1, value2, format) => {
+  const failFormat1 = formater(value1);
+  const failFormat2 = formater(value2);
   const tree = parser(failFormat1, failFormat2);
   if (format === 'plain') {
     const result = planCalculator(tree);
