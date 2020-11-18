@@ -1,9 +1,10 @@
 import _ from 'lodash';
+import { keys } from '../utils.js';
 
 const planCalculator = (tree) => {
   const iter = (data, put) => {
     const arr = data.reduce((result, child) => {
-      const key = child.length === 2 ? child[0] : Object.keys(Object.values(child)[0]);
+      const key = keys(data);
       put.push(key);
       if (child.length === 2) {
         result.push(iter(child[1], put));

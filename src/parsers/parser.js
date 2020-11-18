@@ -1,51 +1,63 @@
 import _ from 'lodash';
 import { keyBattery } from '../utils.js';
 
-const isDeletion = (file1, file2, key) => {
-  if (_.has(file1, key) && !_.has(file2, key)) {
+const isDeletion = (data1, data2, key) => {
+  if (_.has(data1, key) && !_.has(data2, key)) {
     return true;
   }
   return false;
 };
 
-const isAdd = (file1, file2, key) => {
-  if (!_.has(file1, key) && _.has(file2, key)) {
+const isAdd = (data1, data2, key) => {
+  if (!_.has(data1, key) && _.has(data2, key)) {
     return true;
   }
   return false;
 };
 
-const isСhanged = (file1, file2, key) => {
-  if (_.has(file1, key) && _.has(file2, key) && file1[key] !== file2[key]) {
+const isСhanged = (data1, data2, key) => {
+  if (_.has(data1, key) && _.has(data2, key) && data1[key] !== data2[key]) {
     return true;
   }
   return false;
 };
 
-const isObjet = (file1, file2, key) => {
-  if (_.isObject(file1[key]) && _.isObject(file2[key])) {
+const isObjet = (data1, data2, key) => {
+  if (_.isObject(data1[key]) && _.isObject(data2[key])) {
     return true;
   }
   return false;
 };
 
-const parser = (file1, file2) => {
-  const arrKeyfile = keyBattery(file1, file2).sort();
-  const children = arrKeyfile.reduce((acc, key) => {
-    if (isObjet(file1, file2, key)) {
-      const file = [...[key], parser(file1[key], file2[key])];
+const isNumeric = (value) => {
+  if (!isNaN(value)) {
+    return Number(value);
+  }
+  return value;
+};
+
+const parser = (data1, data2) => {
+  const arrKeyValue = keyBattery(data1, data2).sort();
+  const children = arrKeyValue.reduce((acc, key) => {
+    if (isObjet(data1, data2, key)) {
+      const file = [...[key], parser(data1[key], data2[key])];
       acc.push(file);
-    } else if (isСhanged(file1, file2, key)) {
-      const file = { updated: { [key]: [String(file1[key]), String(file2[key])] } };
+    } else if (isСhanged(data1, data2, key)) {
+      const value1 = isNumeric(data1[key]);
+      const value2 = isNumeric(data2[key]);
+      const file = { updated: { [key]: [value1, value2] } };
       acc.push(file);
-    } else if (isAdd(file1, file2, key)) {
-      const file = { add: { [key]: file2[key] } };
+    } else if (isAdd(data1, data2, key)) {
+      const value = isNumeric(data2[key]);
+      const file = { add: { [key]: value } };
       acc.push(file);
-    } else if (isDeletion(file1, file2, key)) {
-      const file = { deletion: { [key]: String(file1[key]) } };
+    } else if (isDeletion(data1, data2, key)) {
+      const value = isNumeric(data1[key]);
+      const file = { deletion: { [key]: value } };
       acc.push(file);
     } else {
-      const file = { equally: { [key]: String(file1[key]) } };
+      const value = isNumeric(data1[key]);
+      const file = { equally: { [key]: value } };
       acc.push(file);
     }
     return acc;

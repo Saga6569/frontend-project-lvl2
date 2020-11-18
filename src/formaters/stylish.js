@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
 import _ from 'lodash';
+import { keys } from '../utils.js';
 
 const stylish = (data, dep) => {
   if (!_.isObject(data)) {
@@ -20,7 +21,7 @@ const formatStylish = (tree) => {
   const iter = (tree, dep) => {
     const indent = (count = 1) => '    '.repeat(count);
     const result = tree.reduce((acc, child) => {
-      const key = child.length === 2 ? child[0] : Object.keys(Object.values(child)[0]);
+      const key = keys(tree);
       if (Array.isArray(child)) {
         acc += `${indent(dep)} ${child[0]}: ${iter(child[1], dep + 1)} \n`;
       } else {

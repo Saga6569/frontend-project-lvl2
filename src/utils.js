@@ -31,10 +31,5 @@ export const formater = (file) => {
   return console.log('no format');
 };
 
-export const finValue = (data) => {
-  const key = Object.keys(data);
-  if (key === null) {
-    return data[key];
-  }
-  return finValue(data[key]);
-};
+export const keys = (data) => (data.length === 2 ? data[0] : Object.keys(Object.values(data)[0]));
+
