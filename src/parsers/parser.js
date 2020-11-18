@@ -30,6 +30,7 @@ const isObjet = (data1, data2, key) => {
 };
 
 const isNumeric = (value) => {
+  // eslint-disable-next-line no-restricted-globals
   if (!isNaN(value)) {
     return Number(value);
   }

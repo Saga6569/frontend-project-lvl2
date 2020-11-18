@@ -32,4 +32,3 @@ export const formater = (file) => {
 };
 
 export const keys = (data) => (data.length === 2 ? data[0] : Object.keys(Object.values(data)[0]));
-
