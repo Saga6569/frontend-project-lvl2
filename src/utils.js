@@ -61,20 +61,17 @@ const isNumeric = (value) => {
   return value;
 };
 
-export const pareserIni = (tree) => {
-  const arr = tree.reduce((result, child) => {
-    const { type, children } = child;
-    if (type === 'nested') {
-      result.push(pareserIni(children));
-    } if (type === 'updated') {
-      child.value = isNumeric(child.value);
-      child.newValue = isNumeric(child.newValue);
-      result.push(child);
-    } else {
-      child.value = isNumeric(child.value);
-      result.push(child);
-    }
-    return result.flat();
-  }, []);
-  return arr;
-};
+export const pareserIni = (tree) => tree.reduce((result, child) => {
+  const { type, children } = child;
+  if (type === 'nested') {
+    result.push(pareserIni(children));
+  } if (type === 'updated') {
+    child.value = isNumeric(child.value);
+    child.newValue = isNumeric(child.newValue);
+    result.push(child);
+  } else {
+    child.value = isNumeric(child.value);
+    result.push(child);
+  }
+  return result.flat();
+}, []);

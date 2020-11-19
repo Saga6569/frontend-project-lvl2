@@ -12,9 +12,10 @@ const stylish = (data, dep) => {
   return `${result}${indent(dep)}}`;
 };
 
+const indent = (count = 1) => '   '.repeat(count);
+
 const formatStylish = (tree) => {
   const iter = (data, dep) => {
-    const indent = (count = 1) => '   '.repeat(count);
     const result = data.reduce((acc, child) => {
       const {
         name, type, value, newValue, children,
