@@ -15,7 +15,7 @@ const stylish = (data, dep) => {
 const formatStylish = (tree) => {
   const iter = (data, dep) => {
     const indent = (count = 1) => '   '.repeat(count);
-    const result = tree.reduce((acc, child) => {
+    const result = data.reduce((acc, child) => {
       const {
         name, type, value, newValue, children,
       } = child;

@@ -31,7 +31,7 @@ const isObjet = (data1, data2, key) => {
 
 const parser = (data1, data2) => {
   const arrKeyfile = keyBattery(data1, data2).sort();
-  const children = arrKeyfile.reduce((acc, key) => {
+  return arrKeyfile.reduce((acc, key) => {
     if (isObjet(data1, data2, key)) {
       const file = { name: key, type: 'nested', children: [...parser(data1[key], data2[key])] };
       acc.push(file);
@@ -52,7 +52,6 @@ const parser = (data1, data2) => {
     }
     return acc;
   }, []);
-  return children;
 };
 
 export default parser;

@@ -4,7 +4,7 @@ const nestedValue = (value) => (_.isObject(value) ? '[complex value]' : value);
 
 const planCalculator = (tree) => {
   const iter = (data, put) => {
-    const arr = tree.reduce((result, child) => {
+    const arr = data.reduce((result, child) => {
       const {
         name, type, value, newValue, children,
       } = child;
