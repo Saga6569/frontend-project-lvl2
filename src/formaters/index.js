@@ -7,16 +7,13 @@ const getDiffCalculator = (value1, value2, format) => {
   const value1Format = formater(value1);
   const value2Format = formater(value2);
   const tree = parser(value1Format, value2Format);
-  const novTree = value1.includes('.ini') || value2.includes('.ini') ? pareserIni(tree) : tree;
+  const nowTree = value1.includes('.ini') || value2.includes('.ini') ? pareserIni(tree) : tree;
   if (format === 'plain') {
-    const result = planCalculator(novTree);
-    return result;
+    return planCalculator(nowTree);
   } if (format === 'json') {
-    const result = JSON.stringify(novTree);
-    return result;
+    return JSON.stringify(nowTree);
   } if (format === 'stylish') {
-    const result = formatStylish(novTree);
-    return result;
+    return formatStylish(nowTree);
   }
   const str = 'no format';
   return str;
