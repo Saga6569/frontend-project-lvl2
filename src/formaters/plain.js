@@ -9,7 +9,7 @@ const planCalculator = (tree, put = []) => tree.reduce((result, child) => {
   put.push(name);
   if (type === 'nested') {
     result.push(planCalculator(children, put));
-  } if (type === 'deletion') {
+  } else if (type === 'deletion') {
     result.push(`Property ${put.join('.')} was removed`);
   } else if (type === 'add') {
     result.push(`Property ${put.join('.')} was added with value: ${nestedValue(value)}`);

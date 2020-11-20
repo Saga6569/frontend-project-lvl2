@@ -4,6 +4,9 @@ import _ from 'lodash';
 const indent = (count = 1) => '    '.repeat(count);
 
 const stylish = (data, dep) => {
+  if (!_.isObject(data)) {
+    return data;
+  }
   const keys = Object.keys(data);
   const result = keys.reduce((acc, key) => {
     const value = _.isObject(data[key]) ? stylish(data[key], dep + 1) : data[key];
@@ -14,16 +17,15 @@ const stylish = (data, dep) => {
 };
 
 const formatStylish = (tree, dep = 0) => {
-  const isNested = (value) => (_.isObject(value) ? stylish(value, dep + 1) : value);
   const result = tree.reduce((acc, child) => {
     const {
       name, type, value, newValue, children,
     } = child;
-    const valueFin = isNested(value);
-    const newValueFin = isNested(newValue);
+    const valueFin = stylish(value, dep + 1);
+    const newValueFin = stylish(newValue, dep + 1);
     if (type === 'nested') {
       acc += `${indent(dep)} ${name}: ${formatStylish(children, dep + 1)} \n`;
-    } if (type === 'deletion') {
+    } else if (type === 'deletion') {
       acc += `${indent(dep)} - ${name}: ${valueFin} \n`;
     } else if (type === 'add') {
       acc += `${indent(dep)} + ${name}: ${valueFin} \n`;

@@ -36,24 +36,6 @@ export const keys = (data) => (data.length === 2 ? data[0] : Object.keys(Object.
 
 export const arrData = (data) => Object.values(Object.values(data)[0]).flat();
 
-export const isNumber = (value) => {
-  if (value % 1 === 0 && Number(value) !== 0) {
-    return true;
-  }
-  return false;
-};
-
-export const parserIni = (tree) => {
-  const result = tree.reduce((acc, child) => {
-    if (Array.isArray(child)) {
-      console.log(child);
-      acc.push(parserIni(child));
-    }
-    return acc;
-  }, []);
-  return result;
-};
-
 const isNumeric = (value) => {
   if (value % 1 === 0 && Number(value) !== 0 && value !== true) {
     return Number(value);
@@ -65,7 +47,7 @@ export const pareserIni = (tree) => tree.reduce((result, child) => {
   const { type, children } = child;
   if (type === 'nested') {
     result.push(pareserIni(children));
-  } if (type === 'updated') {
+  } else if (type === 'updated') {
     child.value = isNumeric(child.value);
     child.newValue = isNumeric(child.newValue);
     result.push(child);
