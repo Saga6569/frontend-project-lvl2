@@ -30,25 +30,25 @@ const isObjet = (data1, data2, key) => {
 };
 
 const parser = (data1, data2) => {
-  const arrKeyfile = keyBattery(data1, data2).sort();
-  return arrKeyfile.reduce((acc, key) => {
+  const arrKeyData = keyBattery(data1, data2).sort();
+  return arrKeyData.reduce((acc, key) => {
     if (isObjet(data1, data2, key)) {
-      const file = { name: key, type: 'nested', children: [...parser(data1[key], data2[key])] };
-      acc.push(file);
+      const value = { name: key, type: 'nested', children: [...parser(data1[key], data2[key])] };
+      acc.push(value);
     } else if (isСhanged(data1, data2, key)) {
-      const file = {
+      const value = {
         name: key, type: 'updated', value: data1[key], newValue: data2[key],
       };
-      acc.push(file);
+      acc.push(value);
     } else if (isAdd(data1, data2, key)) {
-      const file = { name: key, type: 'add', value: data2[key] };
-      acc.push(file);
+      const value = { name: key, type: 'add', value: data2[key] };
+      acc.push(value);
     } else if (isDeletion(data1, data2, key)) {
-      const file = { name: key, type: 'deletion', value: data1[key] };
-      acc.push(file);
+      const value = { name: key, type: 'deletion', value: data1[key] };
+      acc.push(value);
     } else {
-      const file = { name: key, type: 'equally', value: data1[key] };
-      acc.push(file);
+      const value = { name: key, type: 'equally', value: data1[key] };
+      acc.push(value);
     }
     return acc;
   }, []);
