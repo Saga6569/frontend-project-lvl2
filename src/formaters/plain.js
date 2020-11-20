@@ -1,11 +1,12 @@
-/* eslint-disable object-curly-newline */
 import _ from 'lodash';
 
 const nestedValue = (value) => (_.isObject(value) ? '[complex value]' : value);
 
 const planCalculator = (tree) => {
   const iter = (data, put) => data.reduce((result, child) => {
-    const { name, type, value, newValue, children } = child;
+    const {
+      name, type, value, newValue, children,
+    } = child;
     put.push(name);
     if (type === 'nested') {
       result.push(iter(children, put));

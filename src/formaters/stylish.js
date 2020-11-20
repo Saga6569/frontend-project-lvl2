@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
 import _ from 'lodash';
 
+const indent = (count = 1) => '    '.repeat(count);
+
 const stylish = (data, dep) => {
-  const indent = (count = 1) => '    '.repeat(count);
   const keys = Object.keys(data);
   const result = keys.reduce((acc, key) => {
     const value = _.isObject(data[key]) ? stylish(data[key], dep + 1) : data[key];
@@ -12,16 +13,15 @@ const stylish = (data, dep) => {
   return `${result}${indent(dep)}}`;
 };
 
-const indent = (count = 1) => '   '.repeat(count);
-
 const formatStylish = (tree) => {
   const iter = (data, dep) => {
+    const isNested = (value) => (_.isObject(value) ? stylish(value, dep + 1) : value);
     const result = data.reduce((acc, child) => {
       const {
         name, type, value, newValue, children,
       } = child;
-      const valueFin = _.isObject(value) ? stylish(value, dep + 1) : value;
-      const newValueFin = _.isObject(newValue) ? stylish(newValue, dep + 1) : newValue;
+      const valueFin = isNested(value);
+      const newValueFin = isNested(newValue);
       if (type === 'nested') {
         acc += `${indent(dep)} ${name}: ${iter(children, dep + 1)} \n`;
       } if (type === 'deletion') {

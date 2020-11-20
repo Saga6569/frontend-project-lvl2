@@ -4,10 +4,10 @@ import formatStylish from './stylish.js';
 import parser from '../parsers/parser.js';
 
 const getDiffCalculator = (value1, value2, format) => {
-  const failFormat1 = formater(value1);
-  const failFormat2 = formater(value2);
-  const tree = parser(failFormat1, failFormat2);
-  const novTree = value1.includes('.ini') || value1.includes('.ini') ? pareserIni(tree) : tree;
+  const value1Format = formater(value1);
+  const value2Format = formater(value2);
+  const tree = parser(value1Format, value2Format);
+  const novTree = value1.includes('.ini') || value2.includes('.ini') ? pareserIni(tree) : tree;
   if (format === 'plain') {
     const result = planCalculator(novTree);
     return result;
