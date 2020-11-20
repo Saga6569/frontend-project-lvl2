@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 /* eslint-disable no-param-reassign */
 import _ from 'lodash';
 
@@ -17,7 +16,9 @@ const stylish = (data, dep) => {
 const formatStylish = (tree, dep = 0) => {
   const isNested = (value) => (_.isObject(value) ? stylish(value, dep + 1) : value);
   const result = tree.reduce((acc, child) => {
-    const { name, type, value, newValue, children } = child;
+    const {
+      name, type, value, newValue, children,
+    } = child;
     const valueFin = isNested(value);
     const newValueFin = isNested(newValue);
     if (type === 'nested') {
