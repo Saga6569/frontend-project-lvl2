@@ -10,13 +10,12 @@ import diff from './src/formaters/index.js';
 
 const getDiff = (data1, data2, format) => {
   const tree = diff(data1, data2);
-  if (format === 'stylish') {
-    return formatStylish(tree);
+  if (format === 'json') {
+    return JSON.stringify(tree);
   } if (format === 'plain') {
     return planCalculator(tree);
-  } if (format === 'json') {
-    return JSON.stringify(tree);
   }
+  return formatStylish(tree);
 };
 
 export default getDiff;
