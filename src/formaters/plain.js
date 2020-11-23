@@ -12,12 +12,12 @@ const planin = (data, accKeys = []) => {
     const { value } = data;
     return `Property ${pathFromKeys.join('.')} was added with value: ${getValue(value)}`;
   } if (type === 'updated') {
-    const { value, newValue } = data;
-    return `Property ${pathFromKeys.join('.')} was updated. From ${getValue(value)} to ${getValue(newValue)}`;
+    const { oldValue, newValue } = data;
+    return `Property ${pathFromKeys.join('.')} was updated. From ${getValue(oldValue)} to ${getValue(newValue)}`;
   } if (type === 'nested') {
     const { children } = data;
     accKeys.push(name);
-    return children.map((child) => planin(child, accKeys)).flat();
+    return children.flatMap((child) => planin(child, accKeys));
   }
   return [];
 };
