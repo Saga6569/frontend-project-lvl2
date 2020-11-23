@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { keyBattery } from '../utils.js';
 
 const parser = (data1, data2) => {
-  const arrKeyData = keyBattery(data1, data2).sort();
+  const arrKeyData = keyBattery(data1, data2);
   return arrKeyData.reduce((acc, key) => {
     if (_.isObject(data1[key]) && _.isObject(data2[key])) {
       const value = { name: key, type: 'nested', children: [...parser(data1[key], data2[key])] };

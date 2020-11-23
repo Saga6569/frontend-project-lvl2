@@ -1,35 +1,10 @@
 /* eslint-disable no-param-reassign */
-import { readFileSync } from 'fs';
-import jsyaml from 'js-yaml';
-import ini from 'ini';
 import _ from 'lodash';
 
-export const keyBattery = (Vakue1, value2) => {
-  const arrKeyValue1 = Object.keys(Vakue1);
-  const arrKeyValue2 = Object.keys(value2);
-  const arrKeyValues = [...arrKeyValue1, ...arrKeyValue2];
-  const arrKey = arrKeyValues.reduce((acc, key) => {
-    if (!acc.includes(key)) {
-      acc.push(key);
-    }
-    return acc;
-  }, []);
-  return arrKey;
-};
-
-const formats = {
-  yml: jsyaml.safeLoad,
-  json: jsyaml.safeLoad,
-  ini: ini.parse,
-};
-
-export const formater = (data) => {
-  const index = data.lastIndexOf('.');
-  const format = data.slice(index + 1);
-  if (_.has(formats, format)) {
-    return formats[format](readFileSync(data, 'utf-8'));
-  }
-  return console.log('no format');
+export const keyBattery = (data1, data2) => {
+  const keysData1 = Object.keys(data1);
+  const keysData2 = Object.keys(data2);
+  return _.union(keysData1, keysData2).sort();
 };
 
 const isNumber = (value) => {

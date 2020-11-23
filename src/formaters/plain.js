@@ -1,23 +1,27 @@
 import _ from 'lodash';
 
-const nestedValue = (value) => (_.isObject(value) ? '[complex value]' : value);
+const getValue = (value) => (_.isObject(value) ? '[complex value]' : value);
 
-const planCalculator = (tree, put = []) => tree.reduce((result, child) => {
-  const {
-    name, type, value, newValue, children,
-  } = child;
-  put.push(name);
-  if (type === 'nested') {
-    result.push(planCalculator(children, put));
-  } else if (type === 'deletion') {
-    result.push(`Property ${put.join('.')} was removed`);
-  } else if (type === 'add') {
-    result.push(`Property ${put.join('.')} was added with value: ${nestedValue(value)}`);
-  } else if (type === 'updated') {
-    result.push(`Property ${put.join('.')} was updated. From ${nestedValue(value)} to ${nestedValue(newValue)}`);
+const planin = (data, accKeys = []) => {
+  const { type, name } = data;
+  const pathFromKeys = [...accKeys];
+  pathFromKeys.push(name);
+  if (type === 'deletion') {
+    return `Property ${pathFromKeys.join('.')} was removed`;
+  } if (type === 'add') {
+    const { value } = data;
+    return `Property ${pathFromKeys.join('.')} was added with value: ${getValue(value)}`;
+  } if (type === 'updated') {
+    const { value, newValue } = data;
+    return `Property ${pathFromKeys.join('.')} was updated. From ${getValue(value)} to ${getValue(newValue)}`;
+  } if (type === 'nested') {
+    const { children } = data;
+    accKeys.push(name);
+    return children.map((child) => planin(child, accKeys)).flat();
   }
-  put.pop(name);
-  return result.flat();
-}, []);
+  return [];
+};
+
+const planCalculator = (tree) => tree.flatMap((child) => planin(child));
 
 export default planCalculator;
