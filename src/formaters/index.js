@@ -1,9 +1,25 @@
 /* eslint-disable no-param-reassign */
 import _ from 'lodash';
 import { keyBattery, isNumber } from '../utils.js';
-import parser from '../parsers/parser.js';
 
-const diffIni = (object) => {
+const dataDiffTree = (data1, data2, key) => {
+  if (_.isObject(data1[key]) && _.isObject(data2[key])) {
+    const keys = keyBattery(data1[key], data2[key]);
+    const iter = keys.map((keyy) => dataDiffTree(data1[key], data2[key], keyy));
+    return { name: key, type: 'nested', children: [...iter] };
+  } if (_.has(data1, key) && _.has(data2, key) && data1[key] !== data2[key]) {
+    return {
+      name: key, type: 'updated', oldValue: data1[key], newValue: data2[key],
+    };
+  } if (!_.has(data1, key) && _.has(data2, key)) {
+    return { name: key, type: 'add', value: data2[key] };
+  } if (_.has(data1, key) && !_.has(data2, key)) {
+    return { name: key, type: 'deletion', value: data1[key] };
+  }
+  return { name: key, type: 'equally', value: data1[key] };
+};
+
+const dataDiffTreeIni = (object) => {
   const { type } = object;
   if (type === 'nested') {
     const { children } = object;
@@ -17,40 +33,19 @@ const diffIni = (object) => {
   return object;
 };
 
-const buildingDiff = (data1, data2) => {
-  const arrKeyData = keyBattery(data1, data2);
-  const result = arrKeyData.reduce((acc, key) => {
-    if (_.isObject(data1[key]) && _.isObject(data2[key])) {
-      const value = { name: key, type: 'nested', children: [...buildingDiff(data1[key], data2[key])] };
-      acc.push(value);
-    } else if (_.has(data1, key) && _.has(data2, key) && data1[key] !== data2[key]) {
-      const value = {
-        name: key, type: 'updated', oldValue: data1[key], newValue: data2[key],
-      };
-      acc.push(value);
-    } else if (!_.has(data1, key) && _.has(data2, key)) {
-      const value = { name: key, type: 'add', value: data2[key] };
-      acc.push(value);
-    } else if (_.has(data1, key) && !_.has(data2, key)) {
-      const value = { name: key, type: 'deletion', value: data1[key] };
-      acc.push(value);
-    } else {
-      const value = { name: key, type: 'equally', value: data1[key] };
-      acc.push(value);
-    }
-    return acc;
-  }, []);
+const creatingTree = (data) => {
+  const { data1, data2 } = data;
+  const keys = keyBattery(data1, data2);
+  const result = keys.flatMap((key) => dataDiffTree(data1, data2, key));
   return result;
 };
 
-const diff = (data1, data2) => {
-  const value1 = parser(data1);
-  const value2 = parser(data2);
-  const result = buildingDiff(value1, value2);
-  if (data1.includes('.ini') || data2.includes('.ini')) {
-    return result.flatMap((child) => diffIni(child));
+const diff = (data) => {
+  const tree = creatingTree(data);
+  if (!_.has(data, 'conditions')) {
+    return tree;
   }
-  return result;
+  return tree.flatMap((child) => dataDiffTreeIni(child));
 };
 
 export default diff;
