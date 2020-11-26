@@ -5,7 +5,7 @@ import { keyBattery, isNumber } from '../utils.js';
 const dataDiffTree = (data1, data2, key) => {
   if (_.isObject(data1[key]) && _.isObject(data2[key])) {
     const keys = keyBattery(data1[key], data2[key]);
-    const iter = keys.map((keyy) => dataDiffTree(data1[key], data2[key], keyy));
+    const iter = keys.map((keyIter) => dataDiffTree(data1[key], data2[key], keyIter));
     return { name: key, type: 'nested', children: [...iter] };
   } if (_.has(data1, key) && _.has(data2, key) && data1[key] !== data2[key]) {
     return {
