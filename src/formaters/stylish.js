@@ -48,4 +48,5 @@ const formatStylish = (tree) => {
   };
   return iter(tree, 0);
 };
+
 export default formatStylish;
