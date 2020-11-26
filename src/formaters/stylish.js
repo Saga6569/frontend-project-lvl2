@@ -26,14 +26,11 @@ const formatStylish = (tree) => {
       if (type === 'nested') {
         const { children } = child;
         acc += `${retreat} ${name}: ${iter(children, depth + 1)} \n`;
-      } else if (type === 'deletion') {
+      } else if (type === 'deletion' || type === 'add') {
         const { value } = child;
         const getValue = stylish(value, depth + 1);
-        acc += `${retreat} - ${name}: ${getValue} \n`;
-      } else if (type === 'add') {
-        const { value } = child;
-        const getValue = stylish(value, depth + 1);
-        acc += `${retreat} + ${name}: ${getValue} \n`;
+        const act = type === 'deletion' ? '-' : '+';
+        acc += `${retreat} ${act} ${name}: ${getValue} \n`;
       } else if (type === 'updated') {
         const { oldValue, newValue } = child;
         const getOldValue = stylish(oldValue, depth + 1);
