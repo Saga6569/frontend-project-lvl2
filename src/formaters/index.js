@@ -6,7 +6,8 @@ const dataDiffTree = (data1, data2, key) => {
   if (_.isObject(data1[key]) && _.isObject(data2[key])) {
     const keys = keyBattery(data1[key], data2[key]);
     const iter = keys.map((keyy) => dataDiffTree(data1[key], data2[key], keyy));
-    return { name: key, type: 'nested', children: [...iter] };
+    const object = { name: key, type: 'nested', children: [...iter] };
+    return object;
   } if (_.has(data1, key) && _.has(data2, key) && data1[key] !== data2[key]) {
     const objet = {
       name: key, type: 'updated', oldValue: data1[key], newValue: data2[key],
