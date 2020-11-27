@@ -5,10 +5,10 @@ import _ from 'lodash';
 const indent = (count = 1) => '    '.repeat(count);
 
 const stylish = (data, depth) => {
-  const retreat = indent(depth);
   if (!_.isObject(data)) {
     return data;
   }
+  const retreat = indent(depth);
   const keys = Object.keys(data);
   const result = keys.reduce((acc, key) => {
     const value = _.isObject(data[key]) ? stylish(data[key], depth + 1) : data[key];
@@ -18,35 +18,33 @@ const stylish = (data, depth) => {
   return `${result}${retreat}}`;
 };
 
+const iter = (object, depth = 0) => {
+  const retreat = indent(depth);
+  const { name, type } = object;
+  if (type === 'nested') {
+    const { children } = object;
+    const res = children.flatMap((cild) => iter(cild, depth + 1)).join('');
+    const ress = `{\n${res}${retreat}}`;
+    return `${retreat}${name}: ${ress}\n`;
+  } if (type === 'deletion' || type === 'add') {
+    const { value } = object;
+    const getValue = stylish(value, depth + 1);
+    const act = type === 'deletion' ? '-' : '+';
+    return `${retreat}${act} ${name}: ${getValue}\n`;
+  } if (type === 'updated') {
+    const { oldValue, newValue } = object;
+    const getOldValue = stylish(oldValue, depth + 1);
+    const getNewValue = stylish(newValue, depth + 1);
+    return `${retreat}- ${name}: ${getOldValue}\n${retreat}+ ${name}: ${getNewValue}\n`;
+  }
+  const { value } = object;
+  const getValue = stylish(value, depth + 1);
+  return `${retreat}  ${name}: ${getValue}\n`;
+};
+
 const formatStylish = (tree) => {
-  const iter = (tree, depth) => {
-    const retreat = indent(depth);
-    const result = tree.reduce((acc, child) => {
-      const { name, type } = child;
-      if (type === 'nested') {
-        const { children } = child;
-        acc += `${retreat} ${name}: ${iter(children, depth + 1)} \n`;
-      } else if (type === 'deletion' || type === 'add') {
-        const { value } = child;
-        const getValue = stylish(value, depth + 1);
-        const act = type === 'deletion' ? '-' : '+';
-        acc += `${retreat} ${act} ${name}: ${getValue} \n`;
-      } else if (type === 'updated') {
-        const { oldValue, newValue } = child;
-        const getOldValue = stylish(oldValue, depth + 1);
-        const getNewValue = stylish(newValue, depth + 1);
-        acc += `${retreat} - ${name}: ${getOldValue} \n`;
-        acc += `${retreat} + ${name}: ${getNewValue} \n`;
-      } else {
-        const { value } = child;
-        const getValue = stylish(value, depth + 1);
-        acc += `${retreat}   ${name}: ${getValue} \n`;
-      }
-      return acc;
-    }, '{ \n');
-    return `${result}${retreat}}`;
-  };
-  return iter(tree, 0);
+  const result = tree.flatMap((child) => iter(child)).join('');
+  return `{\n ${result}}`;
 };
 
 export default formatStylish;

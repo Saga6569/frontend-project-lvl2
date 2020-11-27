@@ -33,19 +33,14 @@ const dataDiffTreeIni = (object) => {
   return object;
 };
 
-const creatingTree = (data) => {
+const diff = (data) => {
   const { data1, data2 } = data;
   const keys = keyBattery(data1, data2);
   const result = keys.flatMap((key) => dataDiffTree(data1, data2, key));
-  return result;
-};
-
-const diff = (data) => {
-  const tree = creatingTree(data);
   if (!_.has(data, 'conditions')) {
-    return tree;
+    return result;
   }
-  return tree.flatMap((child) => dataDiffTreeIni(child));
+  return result.flatMap((child) => dataDiffTreeIni(child));
 };
 
 export default diff;
