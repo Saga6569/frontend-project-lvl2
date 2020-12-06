@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import getDiff from '../index.js';
+import getDiff from '../src/index.js';
 
 // eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);

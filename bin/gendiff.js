@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import commander from 'commander';
-import getDiff from '../index.js';
+import getDiff from '../src/index.js';
 
 const program = new commander.Command();
 
