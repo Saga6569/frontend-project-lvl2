@@ -1,23 +1,8 @@
 import { readFileSync } from 'fs';
-import jsyaml from 'js-yaml';
-import ini from 'ini';
 
-const parsers = {
-  yml: jsyaml.safeLoad,
-  json: jsyaml.safeLoad,
-  ini: ini.parse,
-};
-
-const dataFormat = (data) => data.slice(data.lastIndexOf('.') + 1);
-
-const formatStil = (data) => {
-  const format = dataFormat(data);
-  return parsers[format](readFileSync(data, 'utf-8'));
-};
-
-const parser = (data1, data2) => {
-  const object1 = formatStil(data1);
-  const object2 = formatStil(data2);
+const parser = (formatData1, data1, formatdata2, data2) => {
+  const object1 = formatData1(readFileSync(data1, 'utf-8'));
+  const object2 = formatdata2(readFileSync(data2, 'utf-8'));
   const getObject = { data1: object1, data2: object2 };
   return getObject;
 };

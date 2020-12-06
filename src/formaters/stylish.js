@@ -1,9 +1,11 @@
-/* eslint-disable no-param-reassign */
 import _ from 'lodash';
 
 const indent = (count = 1) => '    '.repeat(count);
 
 const stylishFormat = (data, depth = 0) => {
+  if (!_.isObject(data)) {
+    return data;
+  }
   const retreat = indent(depth);
   const keys = Object.keys(data);
   const result = keys.flatMap((key) => {
@@ -26,19 +28,19 @@ const nestedDiff = (object, depth = 0) => {
     case 'delete':
     case 'addes': {
       const { value } = object;
-      const getValue = _.isObject(value) ? stylishFormat(value, depth + 1) : value;
+      const getValue = stylishFormat(value, depth + 1);
       const act = type === 'delete' ? '-' : '+';
       return `${retreat}${act} ${name}: ${getValue}\n`;
     }
     case 'updated': {
       const { oldValue, newValue } = object;
-      const getOldValue = _.isObject(oldValue) ? stylishFormat(oldValue, depth + 1) : oldValue;
-      const getNewValue = _.isObject(newValue) ? stylishFormat(newValue, depth + 1) : newValue;
+      const getOldValue = stylishFormat(oldValue, depth + 1);
+      const getNewValue = stylishFormat(newValue, depth + 1);
       return `${retreat}- ${name}: ${getOldValue}\n${retreat}+ ${name}: ${getNewValue}\n`;
     }
     default: {
       const { value } = object;
-      const getValue = _.isObject(value) ? stylishFormat(value, depth + 1) : value;
+      const getValue = stylishFormat(value, depth + 1);
       return `${retreat}  ${name}: ${getValue}\n`;
     }
   }
