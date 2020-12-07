@@ -15,31 +15,31 @@ const stylishFormat = (data, depth = 0) => {
   return `{ \n${result}${retreat}}`;
 };
 
-const nestedDiff = (object, depth = 0) => {
+const nestedDiff = (node, depth = 0) => {
   const retreat = indent(depth);
-  const { name, type } = object;
+  const { name, type } = node;
   switch (type) {
     case 'nested': {
-      const { children } = object;
+      const { children } = node;
       const iterChildren = children.flatMap((cild) => nestedDiff(cild, depth + 1)).join('');
       const result = `{\n${iterChildren}${retreat}}`;
       return `${retreat}${name}: ${result}\n`;
     }
     case 'delete':
     case 'addes': {
-      const { value } = object;
+      const { value } = node;
       const getValue = stylishFormat(value, depth + 1);
       const act = type === 'delete' ? '-' : '+';
       return `${retreat}${act} ${name}: ${getValue}\n`;
     }
     case 'updated': {
-      const { oldValue, newValue } = object;
+      const { oldValue, newValue } = node;
       const getOldValue = stylishFormat(oldValue, depth + 1);
       const getNewValue = stylishFormat(newValue, depth + 1);
       return `${retreat}- ${name}: ${getOldValue}\n${retreat}+ ${name}: ${getNewValue}\n`;
     }
     default: {
-      const { value } = object;
+      const { value } = node;
       const getValue = stylishFormat(value, depth + 1);
       return `${retreat}  ${name}: ${getValue}\n`;
     }

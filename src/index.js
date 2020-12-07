@@ -8,21 +8,21 @@ import parser from './parsers/parser.js';
 import genDiff from './formaters/index.js';
 import { isNumber } from './utils.js';
 
-const dataDiffTreeIni = (node) => {
+const iniIsNumber = (node) => {
   const keys = Object.keys(node);
   return keys.reduce((acc, key) => {
-    const value = _.isObject(node[key]) ? dataDiffTreeIni(node) : isNumber(node[key]);
+    const value = _.isObject(node[key]) ? iniIsNumber(node) : isNumber(node[key]);
     acc[key] = value;
     return acc;
   }, {});
 };
 
-const Ini = (data) => dataDiffTreeIni(ini.parse(data));
+const iniNode = (data) => iniIsNumber(ini.parse(data));
 
 const parsers = {
   yml: jsyaml.safeLoad,
   json: jsyaml.safeLoad,
-  ini: Ini,
+  ini: iniNode,
 };
 
 const dataFormat = (data) => data.slice(data.lastIndexOf('.') + 1);
