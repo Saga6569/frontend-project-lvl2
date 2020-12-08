@@ -31,6 +31,6 @@ test.each([
   [dataIni1, dataIni2, 'stylish', resultDefault],
   [dataIni1, dataIni2, 'json', resultJson],
   [dataIni1, dataIni2, 'plain', resultPlainJson],
-])('.genDiff(%o, %o, %s)', (a, b, c, expected) => {
-  expect(getDiff(a, b, c)).toEqual(expected);
+])('.genDiff(%o, %o, %s)', (a, b, c, result) => {
+  expect(getDiff(a, b, c)).toEqual(result);
 });

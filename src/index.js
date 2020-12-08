@@ -8,16 +8,16 @@ import parser from './parsers/parser.js';
 import genDiff from './formaters/index.js';
 import { isNumber } from './utils.js';
 
-const iniIsNumber = (node) => {
-  const keys = Object.keys(node);
+const iniIsNumber = (object) => {
+  const keys = Object.keys(object);
   return keys.reduce((acc, key) => {
-    const value = _.isObject(node[key]) ? iniIsNumber(node) : isNumber(node[key]);
+    const value = _.isObject(object[key]) ? iniIsNumber(object[[key]]) : isNumber(object[key]);
     acc[key] = value;
     return acc;
   }, {});
 };
 
-const iniNode = (data) => iniIsNumber(ini.parse(data));
+const iniNode = (node) => iniIsNumber(ini.parse(node));
 
 const parsers = {
   yml: jsyaml.safeLoad,
@@ -39,14 +39,12 @@ const formats = {
   json: JSON.stringify,
 };
 
-const getDiff = (data1, data2, format) => {
-  const formatData1 = formatStil(data1);
-  const formatData2 = formatStil(data2);
-  const object = parser(formatData1, data1, formatData2, data2);
+const getDiff = (node1, node2, format) => {
+  const formatNode1 = formatStil(node1);
+  const formatNode2 = formatStil(node2);
+  const object = parser(formatNode1, node1, formatNode2, node2);
   const differenceTree = genDiff(object);
-  if (_.has(formats, format)) {
-    return formats[format](differenceTree);
-  }
+  return formats[format](differenceTree);
 };
 
 export default getDiff;
