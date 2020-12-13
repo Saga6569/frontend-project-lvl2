@@ -22,15 +22,11 @@ const resultJson = getDiff(dataJs1, dataJs2, 'json');
 const resultPlainJson = getDiff(dataJs1, dataJs2, 'plain');
 
 test.each([
-  [dataJs1, dataJs2, 'stylish', resultDefault],
-  [dataJs1, dataJs2, 'json', resultJson],
-  [dataJs1, dataJs2, 'plain', resultPlainJson],
-  [dataYml1, dataYml2, 'stylish', resultDefault],
-  [dataYml1, dataYml2, 'json', resultJson],
-  [dataYml1, dataYml2, 'plain', resultPlainJson],
-  [dataIni1, dataIni2, 'stylish', resultDefault],
-  [dataIni1, dataIni2, 'json', resultJson],
-  [dataIni1, dataIni2, 'plain', resultPlainJson],
-])('.genDiff(%o, %o, %s)', (a, b, c, result) => {
-  expect(getDiff(a, b, c)).toEqual(result);
+  [dataJs1, dataJs2],
+  [dataYml1, dataYml2],
+  [dataIni1, dataIni2],
+])('.genDiff(%o, %o )', (a, b) => {
+  expect(getDiff(a, b, 'stylish')).toEqual(resultDefault);
+  expect(getDiff(a, b, 'json')).toEqual(resultJson);
+  expect(getDiff(a, b, 'plain')).toEqual(resultPlainJson);
 });

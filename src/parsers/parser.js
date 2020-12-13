@@ -1,10 +1,31 @@
-import { readFileSync } from 'fs';
+/* eslint-disable no-restricted-globals */
+import jsyaml from 'js-yaml';
+import ini from 'ini';
+import _ from 'lodash';
 
-const parser = (formatData1, data1, formatdata2, data2) => {
-  const object1 = formatData1(readFileSync(data1, 'utf-8'));
-  const object2 = formatdata2(readFileSync(data2, 'utf-8'));
-  const getObject = { data1: object1, data2: object2 };
-  return getObject;
+const stringToNumber = (str) => (isNaN(parseFloat(str)) ? str : parseFloat(str));
+
+const iniNode = (object) => {
+  const keys = Object.keys(object);
+  return keys.reduce((acc, key) => {
+    const value = _.isObject(object[key]) ? iniNode(object[[key]]) : stringToNumber(object[key]);
+    acc[key] = value;
+    return acc;
+  }, {});
+};
+
+const iniParser = (node) => iniNode(ini.parse(node));
+
+const parsers = {
+  yml: jsyaml.safeLoad,
+  json: jsyaml.safeLoad,
+  ini: iniParser,
+};
+
+const parser = (key) => {
+  const format = key;
+  const result = parsers[format];
+  return result;
 };
 
 export default parser;
