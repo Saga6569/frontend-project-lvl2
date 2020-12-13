@@ -5,16 +5,16 @@ import _ from 'lodash';
 
 const stringToNumber = (str) => (isNaN(parseFloat(str)) ? str : parseFloat(str));
 
-const iniNode = (object) => {
+const newObject = (object) => {
   const keys = Object.keys(object);
   return keys.reduce((acc, key) => {
-    const value = _.isObject(object[key]) ? iniNode(object[[key]]) : stringToNumber(object[key]);
+    const value = _.isObject(object[key]) ? newObject(object[[key]]) : stringToNumber(object[key]);
     acc[key] = value;
     return acc;
   }, {});
 };
 
-const iniParser = (node) => iniNode(ini.parse(node));
+const iniParser = (object) => newObject(ini.parse(object));
 
 const parsers = {
   yml: jsyaml.safeLoad,

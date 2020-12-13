@@ -1,10 +1,10 @@
 import { readFileSync } from 'fs';
 import parser from './parsers/parser.js';
 import genDiff from './genDiff.js';
-import nodeOutputFormat from './format.js';
+import nodeOutputFormat from './outputFormatter.js';
 
 const getDataFormat = (str) => str.slice(str.lastIndexOf('.') + 1);
-const readingData = (data) => readFileSync(data, 'utf-8');
+const readingData = (str) => readFileSync(str, 'utf-8');
 
 const getDiff = (str1, str2, format) => {
   const data1 = parser((str1, getDataFormat(str1)))(readingData(str1));

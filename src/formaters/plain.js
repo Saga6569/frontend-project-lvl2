@@ -5,18 +5,18 @@ const genValue = (value) => (_.isObject(value) ? '[complex value]' : `'${value}'
 const flatFormat = (node, paths = []) => {
   const { type, name } = node;
   const pathKeys = [...paths, name];
-  const strKeys = pathKeys.join('.');
+  const valueKeys = pathKeys.join('.');
   switch (type) {
     case 'delete': {
-      return `Property '${strKeys}' was removed`;
+      return `Property '${valueKeys}' was removed`;
     }
     case 'addes': {
       const { value } = node;
-      return `Property '${strKeys}' was added with value: ${genValue(value)}`;
+      return `Property '${valueKeys}' was added with value: ${genValue(value)}`;
     }
     case 'updated': {
       const { oldValue, newValue } = node;
-      return `Property '${strKeys}' was updated. From ${genValue(oldValue)} to ${genValue(newValue)}`;
+      return `Property '${valueKeys}' was updated. From ${genValue(oldValue)} to ${genValue(newValue)}`;
     }
     case 'notUpdated': {
       return [];
