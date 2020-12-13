@@ -1,27 +1,29 @@
-/* eslint-disable no-param-reassign */
 import _ from 'lodash';
 
 const genValue = (value) => (_.isObject(value) ? '[complex value]' : `'${value}'`);
 
 const flatFormat = (node, paths = []) => {
   const { type, name } = node;
-  paths = [...paths, name];
-  const pathToValue = paths.join('.');
+  const pathKeys = [...paths, name];
+  const strKeys = pathKeys.join('.');
   switch (type) {
     case 'delete': {
-      return `Property '${pathToValue}' was removed`;
+      return `Property '${strKeys}' was removed`;
     }
     case 'addes': {
       const { value } = node;
-      return `Property '${pathToValue}' was added with value: ${genValue(value)}`;
+      return `Property '${strKeys}' was added with value: ${genValue(value)}`;
     }
     case 'updated': {
       const { oldValue, newValue } = node;
-      return `Property '${pathToValue}' was updated. From ${genValue(oldValue)} to ${genValue(newValue)}`;
+      return `Property '${strKeys}' was updated. From ${genValue(oldValue)} to ${genValue(newValue)}`;
+    }
+    case 'notUpdated': {
+      return [];
     }
     case 'nested': {
       const { children } = node;
-      return children.flatMap((child) => flatFormat(child, paths));
+      return children.flatMap((child) => flatFormat(child, pathKeys));
     }
     default:
       return [];

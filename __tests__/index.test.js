@@ -10,12 +10,12 @@ const __dirname = dirname(__filename);
 
 const getFixturePath = (filename) => join(__dirname, '..', '__tests__', '__fixtures__', filename);
 
-const dataJs1 = getFixturePath('fail1.json');
-const dataJs2 = getFixturePath('fail2.json');
-const dataYml1 = getFixturePath('fail1.yml');
-const dataYml2 = getFixturePath('fail2.yml');
-const dataIni1 = getFixturePath('fail1.ini');
-const dataIni2 = getFixturePath('fail2.ini');
+const dataJs1 = getFixturePath('file1.json');
+const dataJs2 = getFixturePath('file2.json');
+const dataYml1 = getFixturePath('file1.yml');
+const dataYml2 = getFixturePath('file2.yml');
+const dataIni1 = getFixturePath('file1.ini');
+const dataIni2 = getFixturePath('file2.ini');
 
 const resultDefault = getDiff(dataJs1, dataJs2, 'stylish');
 const resultJson = getDiff(dataJs1, dataJs2, 'json');

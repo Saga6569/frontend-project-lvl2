@@ -47,7 +47,7 @@ const nestedDiff = (node, depth = 0) => {
 };
 
 const nestedDiffFormat = (tree) => {
-  const result = tree.flatMap((child) => nestedDiff(child)).join('');
+  const result = tree.map((child) => nestedDiff(child)).join('');
   return `{\n${result}}`;
 };
 
