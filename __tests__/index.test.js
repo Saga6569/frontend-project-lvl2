@@ -10,23 +10,35 @@ const __dirname = dirname(__filename);
 
 const getFixturePath = (filename) => join(__dirname, '..', '__tests__', '__fixtures__', filename);
 
-const dataJs1 = getFixturePath('file1.json');
-const dataJs2 = getFixturePath('file2.json');
-const dataYml1 = getFixturePath('file1.yml');
-const dataYml2 = getFixturePath('file2.yml');
-const dataIni1 = getFixturePath('file1.ini');
-const dataIni2 = getFixturePath('file2.ini');
+const dataJs1 = getFixturePath('file1.');
+const dataJs2 = getFixturePath('file2.');
 
-const resultDefault = getDiff(dataJs1, dataJs2, 'stylish');
-const resultJson = getDiff(dataJs1, dataJs2, 'json');
-const resultPlainJson = getDiff(dataJs1, dataJs2, 'plain');
+const resultDefault = getDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'stylish');
+const resultJson = getDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'json');
+const resultPlainJson = getDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'plain');
+
+const format = { A: 'json', B: 'yml', C: 'ini' };
 
 test.each([
   [dataJs1, dataJs2],
-  [dataYml1, dataYml2],
-  [dataIni1, dataIni2],
-])('.genDiff(%o, %o )', (a, b) => {
-  expect(getDiff(a, b, 'stylish')).toEqual(resultDefault);
-  expect(getDiff(a, b, 'json')).toEqual(resultJson);
-  expect(getDiff(a, b, 'plain')).toEqual(resultPlainJson);
+])('.genDiff формат JSON (%o, %o )', (a, b) => {
+  expect(getDiff(a + format.A, b + format.A, 'stylish')).toEqual(resultDefault);
+  expect(getDiff(a + format.A, b + format.A, 'json')).toEqual(resultJson);
+  expect(getDiff(a + format.A, b + format.A, 'plain')).toEqual(resultPlainJson);
+});
+
+test.each([
+  [dataJs1, dataJs2],
+])('.genDiff формат YML (%o, %o )', (a, b) => {
+  expect(getDiff(a + format.B, b + format.B, 'stylish')).toEqual(resultDefault);
+  expect(getDiff(a + format.B, b + format.B, 'json')).toEqual(resultJson);
+  expect(getDiff(a + format.B, b + format.B, 'plain')).toEqual(resultPlainJson);
+});
+
+test.each([
+  [dataJs1, dataJs2],
+])('.genDiff формат INI (%o, %o )', (a, b) => {
+  expect(getDiff(a + format.C, b + format.C, 'stylish')).toEqual(resultDefault);
+  expect(getDiff(a + format.C, b + format.C, 'json')).toEqual(resultJson);
+  expect(getDiff(a + format.C, b + format.C, 'plain')).toEqual(resultPlainJson);
 });
