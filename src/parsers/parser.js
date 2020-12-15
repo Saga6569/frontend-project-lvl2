@@ -22,10 +22,6 @@ const parsers = {
   ini: iniParser,
 };
 
-const parser = (key) => {
-  const format = key;
-  const result = parsers[format];
-  return result;
-};
+const parser = (key, data) => parsers[key](data);
 
 export default parser;

@@ -7,6 +7,6 @@ const formats = {
   json: JSON.stringify,
 };
 
-const nodeOutputFormat = (node) => formats[node];
+const nodeOutputFormat = (key, data) => formats[key](data);
 
 export default nodeOutputFormat;

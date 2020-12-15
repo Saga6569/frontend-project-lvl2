@@ -25,12 +25,15 @@ const nestedDiff = (node, depth = 0) => {
       const result = `{\n${iterChildren}${retreat}}`;
       return `${retreat}${name}: ${result}\n`;
     }
-    case 'delete':
+    case 'delete': {
+      const { value } = node;
+      const getValue = stylishFormat(value, depth + 1);
+      return `${retreat}- ${name}: ${getValue}\n`;
+    }
     case 'addes': {
       const { value } = node;
       const getValue = stylishFormat(value, depth + 1);
-      const act = type === 'delete' ? '-' : '+';
-      return `${retreat}${act} ${name}: ${getValue}\n`;
+      return `${retreat}+ ${name}: ${getValue}\n`;
     }
     case 'updated': {
       const { oldValue, newValue } = node;

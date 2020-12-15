@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import _ from 'lodash';
 
 const genValue = (value) => (_.isObject(value) ? '[complex value]' : `'${value}'`);
@@ -26,7 +27,6 @@ const flatFormat = (node, paths = []) => {
       return children.flatMap((child) => flatFormat(child, pathKeys));
     }
     default:
-      return [];
   }
 };
 
