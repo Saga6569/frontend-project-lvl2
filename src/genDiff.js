@@ -8,17 +8,19 @@ const actionOnNodes = (node1, node2, act) => {
 };
 
 const dataDiffTree = (data1, data2, key) => {
-  if (_.isObject(data1[key]) && _.isObject(data2[key])) {
-    const iter = actionOnNodes(data1[key], data2[key], dataDiffTree);
-    return { name: key, type: 'nested', children: iter };
-  } if (!_.has(data1, key)) {
+  if (!_.has(data1, key)) {
     return { name: key, type: 'addes', value: data2[key] };
   } if (!_.has(data2, key)) {
     return { name: key, type: 'delete', value: data1[key] };
-  } if (data1[key] !== data2[key]) {
-    return {
-      name: key, type: 'updated', oldValue: data1[key], newValue: data2[key],
-    };
+  } if (_.has(data1, key) && _.has(data2, key)) {
+    if (_.isObject(data1[key]) && _.isObject(data2[key])) {
+      const iter = actionOnNodes(data1[key], data2[key], dataDiffTree);
+      return { name: key, type: 'nested', children: iter };
+    } if (data1[key] !== data2[key]) {
+      return {
+        name: key, type: 'updated', oldValue: data1[key], newValue: data2[key],
+      };
+    }
   }
   return { name: key, type: 'notUpdated', value: data1[key] };
 };
