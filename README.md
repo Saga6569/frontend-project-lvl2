@@ -27,17 +27,17 @@ Node.js 14. и выше.
 
 6.  Готово!
 
-### Данная утилита позволяет сравнить 2 файла 'json', 'yml', 'ini' как одного формата так и разных форматов и принмает относительный, так и абсолютнымй путь 
+### Данная утилита позволяет сравнить 2 файла c расширением 'json', 'yml', 'ini' как одного формата, так и разных форматов и принимает относительный или абсолютный путь 
 
-### Что бы получить информацию об утилите используйте команду gendiff -h
+### Чтобы получить информацию об утилите используйте команду gendiff -h
 
 [![asciicast](https://asciinema.org/a/1wkCvpACKrr1UCVdlywpGRZz4.svg)](https://asciinema.org/a/1wkCvpACKrr1UCVdlywpGRZz4)
 
-### Утилита имеет 3 формата  вывода 'stylish', 'plain', 'json'
+### Утилита имеет 3 формата вывода - 'stylish', 'plain', 'json'
 
-### Формат 'stylish' используется по умолчанию.
+### Формат 'stylish' используется по умолчанию
 
-Что бы сравнить два файла используйте команду gendiff fileName1 fileName2 если вы в одной диретории сфайлами.
+Чтобы сравнить два файла используйте команду gendiff fileName1 fileName2, если вы в одной диретории с файлами.
 
 [![asciicast](https://asciinema.org/a/tl1YKjewMyKZ1dMIXSnyoMJvO.svg)](https://asciinema.org/a/tl1YKjewMyKZ1dMIXSnyoMJvO)
 
@@ -45,17 +45,17 @@ Node.js 14. и выше.
 
  [![asciicast](https://asciinema.org/a/sNbI9IDSfSiBoqPbv9VUmi8Vk.svg)](https://asciinema.org/a/sNbI9IDSfSiBoqPbv9VUmi8Vk)
 
-### Формат 'plain' и 'json' нужно  указать.
+### Формат 'plain' и 'json' нужно  указать
 
 пример формата 'plain' gendiff --format plain fileName1 fileName2  
 
 [![asciicast](https://asciinema.org/a/EIs7HJ8AKiuD3QO6LRCcEbAcw.svg)](https://asciinema.org/a/EIs7HJ8AKiuD3QO6LRCcEbAcw)
 
-пример формата 'json' gendiff --format plain fileName1 fileName2  
+пример формата 'json' gendiff --format json fileName1 fileName2  
 
 [![asciicast](https://asciinema.org/a/MylN3AZJQjvUHexFP5h3h6X83.svg)](https://asciinema.org/a/MylN3AZJQjvUHexFP5h3h6X83)
 
-### Так же можно сравнивать файлы разных форматов.
+### Так же можно сравнивать файлы разных форматов
 
 [![asciicast](https://asciinema.org/a/X1WBl6SfaevuMNaGnyPt4VZYt.svg)](https://asciinema.org/a/X1WBl6SfaevuMNaGnyPt4VZYt)
 
