@@ -31,9 +31,7 @@ Node.js 14. и выше.
 
 ### Что бы получить информацию об утилите используйте команду gendiff -h
 
-[![asciicast](https://asciinema.org/connect/b95e7c8d-dc55-4ce3-907e-2bd6b8013467.svg)](https://asciinema.org/connect/b95e7c8d-dc55-4ce3-907e-2bd6b8013467)
-
-
+[![asciicast](https://asciinema.org/a/1wkCvpACKrr1UCVdlywpGRZz4.svg)](https://asciinema.org/a/1wkCvpACKrr1UCVdlywpGRZz4)
 
 ### Утилита имеет 3 формата  вывода 'stylish', 'plain', 'json'
 
@@ -56,3 +54,8 @@ Node.js 14. и выше.
 пример формата 'json' gendiff --format plain fileName1 fileName2  
 
 [![asciicast](https://asciinema.org/a/MylN3AZJQjvUHexFP5h3h6X83.svg)](https://asciinema.org/a/MylN3AZJQjvUHexFP5h3h6X83)
+
+### Так же можно сравнивать файлы разных форматов.
+
+[![asciicast](https://asciinema.org/a/X1WBl6SfaevuMNaGnyPt4VZYt.svg)](https://asciinema.org/a/X1WBl6SfaevuMNaGnyPt4VZYt)
+
