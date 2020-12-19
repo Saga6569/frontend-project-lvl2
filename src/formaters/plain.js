@@ -1,35 +1,35 @@
-/* eslint-disable consistent-return */
 import _ from 'lodash';
 
 const genValue = (value) => (_.isObject(value) ? '[complex value]' : `'${value}'`);
 
-const flatFormat = (node, paths = []) => {
+const format = (node, paths = []) => {
   const { type, name } = node;
-  const pathKeys = [...paths, name];
-  const valueKeys = pathKeys.join('.');
+  const fullPath = [...paths, name];
+  const newPaths = fullPath.join('.');
   switch (type) {
-    case 'delete': {
-      return `Property '${valueKeys}' was removed`;
+    case 'deleted': {
+      return `Property '${newPaths}' was removed`;
     }
-    case 'addes': {
+    case 'added': {
       const { value } = node;
-      return `Property '${valueKeys}' was added with value: ${genValue(value)}`;
+      return `Property '${newPaths}' was added with value: ${genValue(value)}`;
     }
     case 'updated': {
       const { oldValue, newValue } = node;
-      return `Property '${valueKeys}' was updated. From ${genValue(oldValue)} to ${genValue(newValue)}`;
+      return `Property '${newPaths}' was updated. From ${genValue(oldValue)} to ${genValue(newValue)}`;
     }
     case 'notUpdated': {
       return [];
     }
     case 'nested': {
       const { children } = node;
-      return children.flatMap((child) => flatFormat(child, pathKeys));
+      return children.flatMap((child) => format(child, fullPath));
     }
     default:
+      throw new Error(`Unknown key '${type}'!`);
   }
 };
 
-const flatFormatDifferences = (tree) => tree.flatMap((branches) => flatFormat(branches));
+const plainFormatDifferences = (tree) => tree.flatMap((branches) => format(branches));
 
-export default flatFormatDifferences;
+export default plainFormatDifferences;

@@ -1,14 +1,14 @@
 import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import getDiff from '../src/index.js';
+import getDiff from '../../src/index.js';
 
 // eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = dirname(__filename);
 
-const getFixturePath = (filename) => join(__dirname, '..', '__tests__', '__fixtures__', filename);
+const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
 
 const dataJs1 = getFixturePath('file1.');
 const dataJs2 = getFixturePath('file2.');
@@ -71,9 +71,9 @@ const referencePlain = ["Property 'common.follow' was added with value: 'false'"
 const referenceJson = [{
   name: 'common',
   type: 'nested',
-  children: [{ name: 'follow', type: 'addes', value: false }, { name: 'setting1', type: 'notUpdated', value: 'Value 1' }, { name: 'setting2', type: 'delete', value: 200 }, {
+  children: [{ name: 'follow', type: 'added', value: false }, { name: 'setting1', type: 'notUpdated', value: 'Value 1' }, { name: 'setting2', type: 'deleted', value: 200 }, {
     name: 'setting3', type: 'updated', oldValue: true, newValue: null,
-  }, { name: 'setting4', type: 'addes', value: 'blah blah' }, { name: 'setting5', type: 'addes', value: { key5: 'value5' } }, {
+  }, { name: 'setting4', type: 'added', value: 'blah blah' }, { name: 'setting5', type: 'added', value: { key5: 'value5' } }, {
     name: 'setting6',
     type: 'nested',
     children: [{
@@ -82,7 +82,7 @@ const referenceJson = [{
       children: [{
         name: 'wow', type: 'updated', oldValue: '', newValue: 'so much',
       }],
-    }, { name: 'key', type: 'notUpdated', value: 'value' }, { name: 'ops', type: 'addes', value: 'vops' }],
+    }, { name: 'key', type: 'notUpdated', value: 'value' }, { name: 'ops', type: 'added', value: 'vops' }],
   }],
 }, {
   name: 'group1',
@@ -92,16 +92,14 @@ const referenceJson = [{
   }, { name: 'foo', type: 'notUpdated', value: 'bar' }, {
     name: 'nest', type: 'updated', oldValue: { key: 'value' }, newValue: 'str',
   }],
-}, { name: 'group2', type: 'delete', value: { abc: 12345, deep: { id: 45 } } }, { name: 'group3', type: 'addes', value: { fee: 100500, deep: { id: { number: 45 } } } }];
-
-const format = { A: 'json', B: 'yml', C: 'ini' };
+}, { name: 'group2', type: 'deleted', value: { abc: 12345, deep: { id: 45 } } }, { name: 'group3', type: 'added', value: { fee: 100500, deep: { id: { number: 45 } } } }];
 
 test.each([
-  [dataJs1 + format.A, dataJs2 + format.A],
-  [dataJs1 + format.B, dataJs2 + format.B],
-  [dataJs1 + format.C, dataJs2 + format.C],
-])('.genDiff (%o, %o )', (a, b) => {
-  expect(getDiff(a, b, 'stylish')).toEqual(referenceStylish);
-  expect(getDiff(a, b, 'plain')).toEqual(referencePlain);
-  expect(getDiff(a, b, 'json')).toEqual(JSON.stringify(referenceJson));
+  ['json'],
+  ['yml'],
+  ['ini'],
+])('.genDiff (%o)', (format) => {
+  expect(getDiff(dataJs1 + format, dataJs2 + format, 'stylish')).toEqual(referenceStylish);
+  expect(getDiff(dataJs1 + format, dataJs2 + format, 'plain')).toEqual(referencePlain);
+  expect(getDiff(dataJs1 + format, dataJs2 + format, 'json')).toEqual(JSON.stringify(referenceJson));
 });
