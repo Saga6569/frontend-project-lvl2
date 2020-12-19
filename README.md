@@ -19,15 +19,15 @@ Node.js 14. и выше.
 
 1. `$ git clone https://github.com/Saga6569/frontend-project-lvl2.git`
 
-3. `$ cd fronted-project-lvl2`
+2. `$ cd fronted-project-lvl2`
 
-4. `$ npm install`
+3. `$ make install`
 
-5. `$ npm link`
+4. `$ make lint`
+
+5. `$ make test` что бы  проверить  коректосность  работы.
 
 6.  Готово!
-
-## 
 
 
 ### Данная утилита позволяет сравнить 2 файла c расширением 'json', 'yml', 'ini' как одного, так и разных форматов и принимает относительный или абсолютный путь 
