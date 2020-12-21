@@ -3,7 +3,7 @@
     "gendiff": "bin/gendiff.js"
   },
   "type": "module",
-  "name": "frontend-project-lvl2",
+  "name": "@saga6569/genDiff",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

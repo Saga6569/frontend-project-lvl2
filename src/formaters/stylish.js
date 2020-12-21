@@ -1,57 +1,59 @@
 import _ from 'lodash';
 
-const indent = (count = 1) => '    '.repeat(count);
+const getIndent = (depth = 1) => ' '.repeat(depth * 4 - 2);
 
-const formattingTheValue = (data, depth = 0) => {
+const formatValue = (data, depth) => {
   if (!_.isObject(data)) {
     return data;
   }
-  const getindent = indent(depth);
+  const indent = getIndent(depth + 1);
   const keys = Object.keys(data);
-  const result = keys.flatMap((key) => {
-    const value = _.isObject(data[key]) ? formattingTheValue(data[key], depth + 1) : data[key];
-    return `${getindent}${key}: ${value} \n`;
+  const result = keys.map((key) => {
+    const value = _.isObject(data[key]) ? formatValue(data[key], depth + 1) : data[key];
+    return `${indent}  ${key}: ${value}\n`;
   }).join('');
-  return `{ \n${result}${getindent}}`;
+  return `{\n${result}${indent}  }`;
 };
 
-const nestedDiff = (node, depth = 0) => {
-  const getindent = indent(depth);
-  const { name, type } = node;
+const format = (node, depth = 0) => {
+  const indent = getIndent(depth + 1);
+  const { type } = node;
   switch (type) {
     case 'nested': {
-      const { children } = node;
-      const iterChildren = children.flatMap((cild) => nestedDiff(cild, depth + 1)).join('');
-      const result = `{\n${iterChildren}${getindent}}`;
-      return `${getindent}${name}: ${result}\n`;
+      const { children, name } = node;
+      const formattedNode = children.flatMap((child) => format(child, depth + 1)).join('');
+      const result = `{\n${formattedNode}${indent}  }`;
+      return `${indent}  ${name}: ${result}\n`;
     }
     case 'deleted': {
-      const { value } = node;
-      const getValue = formattingTheValue(value, depth + 1);
-      return `${getindent}- ${name}: ${getValue}\n`;
+      const { value, name } = node;
+      const formattedValue = formatValue(value, depth);
+      return `${indent}- ${name}: ${formattedValue}\n`;
     }
     case 'added': {
-      const { value } = node;
-      const getValue = formattingTheValue(value, depth + 1);
-      return `${getindent}+ ${name}: ${getValue}\n`;
+      const { value, name } = node;
+      const formattedValue = formatValue(value, depth);
+      return `${indent}+ ${name}: ${formattedValue}\n`;
     }
     case 'updated': {
-      const { oldValue, newValue } = node;
-      const getOldValue = formattingTheValue(oldValue, depth + 1);
-      const getNewValue = formattingTheValue(newValue, depth + 1);
-      return `${getindent}- ${name}: ${getOldValue}\n${getindent}+ ${name}: ${getNewValue}\n`;
+      const { oldValue, newValue, name } = node;
+      const oldFormattedValue = formatValue(oldValue, depth);
+      const newFormattedValue = formatValue(newValue, depth);
+      return `${indent}- ${name}: ${oldFormattedValue}\n${indent}+ ${name}: ${newFormattedValue}\n`;
     }
-    default: {
-      const { value } = node;
-      const getValue = formattingTheValue(value, depth + 1);
-      return `${getindent}  ${name}: ${getValue}\n`;
+    case 'notUpdated': {
+      const { value, name } = node;
+      const formattedValue = formatValue(value, depth);
+      return `${indent}  ${name}: ${formattedValue}\n`;
     }
+    default:
+      throw new Error(`Unknown type '${type}'!`);
   }
 };
 
-const stylishFormatDifferences = (tree) => {
-  const result = tree.map((child) => nestedDiff(child)).join('');
+const stylishFormat = (tree) => {
+  const result = tree.map((node) => format(node)).join('');
   return `{\n${result}}`;
 };
 
-export default stylishFormatDifferences;
+export default stylishFormat;

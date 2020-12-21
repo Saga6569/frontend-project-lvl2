@@ -1,35 +1,35 @@
 import _ from 'lodash';
 
-const genValue = (value) => (_.isObject(value) ? '[complex value]' : `'${value}'`);
+const getValue = (value) => (_.isObject(value) ? '[complex value]' : `'${value}'`);
 
 const format = (node, paths = []) => {
   const { type, name } = node;
-  const fullPath = [...paths, name];
-  const newPaths = fullPath.join('.');
+  const newPaths = [...paths, name];
+  const fullPath = newPaths.join('.');
   switch (type) {
     case 'deleted': {
-      return `Property '${newPaths}' was removed`;
+      return `Property '${fullPath}' was removed`;
     }
     case 'added': {
       const { value } = node;
-      return `Property '${newPaths}' was added with value: ${genValue(value)}`;
+      return `Property '${fullPath}' was added with value: ${getValue(value)}`;
     }
     case 'updated': {
       const { oldValue, newValue } = node;
-      return `Property '${newPaths}' was updated. From ${genValue(oldValue)} to ${genValue(newValue)}`;
+      return `Property '${fullPath}' was updated. From ${getValue(oldValue)} to ${getValue(newValue)}`;
     }
     case 'notUpdated': {
       return [];
     }
     case 'nested': {
       const { children } = node;
-      return children.flatMap((child) => format(child, fullPath));
+      return children.flatMap((child) => format(child, newPaths));
     }
     default:
-      throw new Error(`Unknown key '${type}'!`);
+      throw new Error(`Unknown type '${type}'!`);
   }
 };
 
-const plainFormatDifferences = (tree) => tree.flatMap((branches) => format(branches));
+const plainFormat = (tree) => tree.flatMap((node) => format(node));
 
-export default plainFormatDifferences;
+export default plainFormat;
