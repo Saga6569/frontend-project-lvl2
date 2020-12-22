@@ -21,6 +21,6 @@ test.each([
   const filepath1 = getFixturePath(`file1.${format}`);
   const filepath2 = getFixturePath(`file2.${format}`);
   expect(getDiff(filepath1, filepath2, 'stylish')).toEqual(resultStylish);
-  expect(getDiff(filepath1, filepath2, 'plain')).toEqual(resultPlain);
+  expect(String(getDiff(filepath1, filepath2, 'plain'))).toEqual(resultPlain);
   expect(getDiff(filepath1, filepath2, 'json')).toEqual(resultJson);
 });

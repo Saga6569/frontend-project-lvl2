@@ -10,7 +10,7 @@ const formatValue = (data, depth) => {
   const keys = Object.keys(data);
   const result = keys.map((key) => {
     const value = _.isObject(data[key]) ? formatValue(data[key], depth + 1) : data[key];
-    return `${indent}  ${key}: ${value}\n`;
+    return `${indent}      ${key}: ${value}\n`;
   }).join('');
   return `{\n${result}${indent}  }`;
 };
