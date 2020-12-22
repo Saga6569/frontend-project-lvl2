@@ -36,6 +36,8 @@ Node.js 14. и выше.
 
 [<img src="./asciinema/publish.svg">](https://asciinema.org/a/EIs7HJ8AKiuD3QO6LRCcEbAcw)
 
+[<img src="./asciinema/publish.svg">](https://asciinema.org/a/297173)
+
 ### Утилита имеет 3 формата вывода - 'stylish', 'plain', 'json'
 
 ### Формат 'stylish' используется по умолчанию
