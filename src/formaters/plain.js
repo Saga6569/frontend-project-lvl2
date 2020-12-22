@@ -30,6 +30,6 @@ const format = (node, paths = []) => {
   }
 };
 
-const plainFormat = (tree) => tree.flatMap((node) => format(node));
+const plainFormat = (tree) => tree.flatMap((node) => format(node)).join('\n');
 
 export default plainFormat;
