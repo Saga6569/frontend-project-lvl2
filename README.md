@@ -34,9 +34,7 @@ Node.js 14. и выше.
 
 ### Чтобы получить информацию об утилите используйте команду gendiff -h
 
-[<img src="./asciinema/publish.svg">](https://asciinema.org/a/EIs7HJ8AKiuD3QO6LRCcEbAcw)
-
-[<img src="./asciinema/publish.svg">](https://asciinema.org/a/297173)
+ [![asciicast](https://asciinema.org/a/1wkCvpACKrr1UCVdlywpGRZz4.svg)](https://asciinema.org/a/1wkCvpACKrr1UCVdlywpGRZz4)
 
 ### Утилита имеет 3 формата вывода - 'stylish', 'plain', 'json'
 
