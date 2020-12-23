@@ -12,8 +12,8 @@ const genDiff = (data1, data2) => {
       return { name: key, type: 'deleted', value: data1[key] };
     }
     if (_.isPlainObject(data1[key]) && _.isPlainObject(data2[key])) {
-      const ChildrensNodes = genDiff(data1[key], data2[key]);
-      return { name: key, type: 'nested', children: ChildrensNodes };
+      const childrensNodes = genDiff(data1[key], data2[key]);
+      return { name: key, type: 'nested', children: childrensNodes };
     }
     if (!_.isEqual(data1[key], data2[key])) {
       return {

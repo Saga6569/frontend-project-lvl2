@@ -24,3 +24,7 @@ test.each([
   expect(getDiff(filepath1, filepath2, 'plain')).toEqual(resultPlain);
   expect(getDiff(filepath1, filepath2, 'json')).toEqual(resultJson);
 });
+
+test('Check Error', () => {
+  expect(() => getDiff()).toThrow();
+});

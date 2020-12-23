@@ -9,7 +9,7 @@ const formatValue = (data, depth) => {
   const indent = getIndent(depth + 1);
   const keys = Object.keys(data);
   const result = keys.map((key) => {
-    const value = _.isObject(data[key]) ? formatValue(data[key], depth + 1) : data[key];
+    const value = formatValue(data[key], depth + 1);
     return `${indent}      ${key}: ${value}\n`;
   }).join('');
   return `{\n${result}${indent}  }`;
@@ -21,30 +21,30 @@ const format = (node, depth = 0) => {
   switch (type) {
     case 'nested': {
       const { children, name } = node;
-      const formattedNode = children.flatMap((child) => format(child, depth + 1)).join('');
-      const result = `{\n${formattedNode}${indent}  }`;
-      return `${indent}  ${name}: ${result}\n`;
+      const formattedNodes = children.map((child) => format(child, depth + 1)).join('\n');
+      const result = `{\n${formattedNodes}\n${indent}  }`;
+      return `${indent}  ${name}: ${result}`;
     }
     case 'deleted': {
       const { value, name } = node;
       const formattedValue = formatValue(value, depth);
-      return `${indent}- ${name}: ${formattedValue}\n`;
+      return `${indent}- ${name}: ${formattedValue}`;
     }
     case 'added': {
       const { value, name } = node;
       const formattedValue = formatValue(value, depth);
-      return `${indent}+ ${name}: ${formattedValue}\n`;
+      return `${indent}+ ${name}: ${formattedValue}`;
     }
     case 'updated': {
       const { oldValue, newValue, name } = node;
       const oldFormattedValue = formatValue(oldValue, depth);
       const newFormattedValue = formatValue(newValue, depth);
-      return `${indent}- ${name}: ${oldFormattedValue}\n${indent}+ ${name}: ${newFormattedValue}\n`;
+      return `${indent}- ${name}: ${oldFormattedValue}\n${indent}+ ${name}: ${newFormattedValue}`;
     }
     case 'notUpdated': {
       const { value, name } = node;
       const formattedValue = formatValue(value, depth);
-      return `${indent}  ${name}: ${formattedValue}\n`;
+      return `${indent}  ${name}: ${formattedValue}`;
     }
     default:
       throw new Error(`Unknown type '${type}'!`);
@@ -52,8 +52,8 @@ const format = (node, depth = 0) => {
 };
 
 const stylishFormat = (tree) => {
-  const result = tree.map((node) => format(node)).join('');
-  return `{\n${result}}`;
+  const result = tree.map((node) => format(node)).join('\n');
+  return `{\n${result}\n}`;
 };
 
 export default stylishFormat;
