@@ -34,7 +34,7 @@ Node.js 14. и выше.
 
 ### Чтобы получить информацию об утилите используйте команду gendiff -h
 
- [[<img src="./asciinema/1wkCvpACKrr1UCVdlywpGRZz4.svg">]](https://asciinema.org/a/1wkCvpACKrr1UCVdlywpGRZz4)
+ [<img src="./asciinema/1wkCvpACKrr1UCVdlywpGRZz4.svg">](https://asciinema.org/a/1wkCvpACKrr1UCVdlywpGRZz4)
 
 ### Утилита имеет 3 формата вывода - 'stylish', 'plain', 'json'
 
@@ -42,7 +42,7 @@ Node.js 14. и выше.
 
 Чтобы сравнить два файла используйте команду gendiff fileName1 fileName2, если вы в одной диретории с файлами.
 
-[![asciicast](https://asciinema.org/a/tl1YKjewMyKZ1dMIXSnyoMJvO.svg)](https://asciinema.org/a/tl1YKjewMyKZ1dMIXSnyoMJvO)
+[<img src="./asciinema/tl1YKjewMyKZ1dMIXSnyoMJvO.svg">](https://asciinema.org/a/tl1YKjewMyKZ1dMIXSnyoMJvO.svg)
 
 если в другой деректории 
 
