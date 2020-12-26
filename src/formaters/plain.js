@@ -1,6 +1,11 @@
 import _ from 'lodash';
 
-const getValue = (value) => (_.isObject(value) ? '[complex value]' : `'${value}'`);
+const getValue = (value) => {
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  return typeof value !== 'string' ? value : `'${value}'`;
+};
 
 const format = (node, paths = []) => {
   const { type, name } = node;

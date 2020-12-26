@@ -10,7 +10,7 @@ const getFullPath = (path) => resolve(process.cwd(), path);
 
 const getDataFormat = (data) => extname(data).slice(1);
 
-const getDiff = (path1, path2, formatName) => {
+const getDiff = (path1, path2, formatName = 'stylish') => {
   const content1 = getContent(getFullPath(path1));
   const content2 = getContent(getFullPath(path2));
   const data1 = parser(content1, getDataFormat(path1));

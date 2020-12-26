@@ -7,11 +7,10 @@ const formatNumber = (object) => {
   const keys = Object.keys(object);
   return keys.reduce((acc, key) => {
     if (_.isObject(object[key])) {
-      acc[key] = formatNumber(object[[key]]);
-    } else {
-      acc[key] = isNaN(parseFloat(object[key])) ? object[key] : parseFloat(object[key]);
+      return { ...acc, [key]: formatNumber(object[key]) };
     }
-    return acc;
+    const newValue = isNaN(parseFloat(object[key])) ? object[key] : parseFloat(object[key]);
+    return { ...acc, [key]: newValue };
   }, {});
 };
 

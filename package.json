@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/Saga6569/frontend-project-lvl2#readme",
   "dependencies": {
-    "@hexlet/immutable-fs-trees": "^0.7.0",
     "commander": "^6.1.0",
     "ini": "^1.3.5",
     "js-yaml": "^3.14.0",
