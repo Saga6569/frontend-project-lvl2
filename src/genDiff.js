@@ -3,7 +3,7 @@ import _ from 'lodash';
 const genDiff = (data1, data2) => {
   const keys1 = Object.keys(data1);
   const keys2 = Object.keys(data2);
-  const keys = _.union(keys1, keys2).sort();
+  const keys = _.sortBy(_.union(keys1, keys2));
   return keys.map((key) => {
     if (!_.has(data1, key)) {
       return { name: key, type: 'added', value: data2[key] };

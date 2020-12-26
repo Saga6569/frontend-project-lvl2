@@ -14,14 +14,14 @@ const formatNumber = (object) => {
   }, {});
 };
 
-const iniParser = (data) => formatNumber(ini.parse(data));
+const iniParse = (data) => formatNumber(ini.parse(data));
 
 const parsers = {
   yml: jsyaml.safeLoad,
   json: jsyaml.safeLoad,
-  ini: iniParser,
+  ini: iniParse,
 };
 
-const parser = (data, formatName) => parsers[formatName](data);
+const parse = (data, formatName) => parsers[formatName](data);
 
-export default parser;
+export default parse;
