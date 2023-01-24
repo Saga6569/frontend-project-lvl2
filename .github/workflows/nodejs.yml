@@ -15,20 +15,20 @@ jobs:
     strategy:
       # Node versions list
       matrix:
-        node-version: [v14.9.0]
+        node-version: [v16.15.1]
 
     steps:
         # Check-out repository under GitHub workspace
         # https://github.com/actions/checkout
       - uses: actions/checkout@v2
         # Step's name
-      - name: Use Node.js v14.9.0
+      - name: Use Node.js v16.15.1
         # Configures the node version used on GitHub-hosted runners
         # https://github.com/actions/setup-node
         uses: actions/setup-node@v1
         # The Node.js version to configure
         with:
-          node-version: v14.9.0
+          node-version: v16.15.1
       - name: build project
         # Install and build project
         run: |
