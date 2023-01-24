@@ -1,10 +1,11 @@
-import { test, expect } from '@jest/globals';
+// import { expect, test } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { readFileSync } from 'fs';
 import getDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
+console.log(__filename);
 const __dirname = dirname(__filename);
 
 const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
